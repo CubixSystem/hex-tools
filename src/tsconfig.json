@@ -1,0 +1,9 @@
+{
+  "extends": "../base.tsconfig",
+  "compilerOptions": {
+    "inlineSourceMap": true,
+    "outDir": "../dist",
+    "rootDir": "./",
+    "sourceRoot": "./src"
+  }
+}

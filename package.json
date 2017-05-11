@@ -1,0 +1,23 @@
+{
+  "name": "hex-tools",
+  "version": "0.1.0",
+  "description": "",
+  "main": "./dist/bundle.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "webpack": "tsc && webpack --watch"
+  },
+  "author": "Kurochkin Oleg",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^7.0.18",
+    "@types/webpack": "^2.2.15",
+    "source-map-loader": "^0.2.1",
+    "ts-loader": "^2.0.3",
+    "tslint": "^5.2.0",
+    "tslint-loader": "^3.5.3",
+    "typescript": "^2.3.2",
+    "webpack": "^2.5.1"
+  }
+}
