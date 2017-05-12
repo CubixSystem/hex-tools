@@ -1,4 +1,7 @@
+/* tslint:disable:no-var-requires */
+
 import * as path from 'path';
+const TypedocWebpackPlugin = require('typedoc-webpack-plugin');
 
 module.exports = {
   // Enable sourcemaps for debugging webpack's output.
@@ -24,6 +27,8 @@ module.exports = {
     filename: 'bundle.js',
   path: path.resolve(__dirname, './dist')
   },
+
+  plugins: [ new TypedocWebpackPlugin({ out: '../docs' }) ],
 
   resolve: {
     extensions: [ '.webpack.js', '.web.js', '.ts' ]
