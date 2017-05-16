@@ -1,0 +1,51 @@
+export class CubeVector {
+  public static add(vectorA: CubeVector, vectorB: CubeVector) {
+    return new CubeVector(vectorA.q + vectorB.q, vectorA.r + vectorB.r, vectorA.s + vectorB.s);
+  }
+
+  public static subtract(vectorA: CubeVector, vectorB: CubeVector) {
+    return new CubeVector(vectorA.q - vectorB.q, vectorA.r - vectorB.r, vectorA.s - vectorB.s);
+  }
+
+  public static multiply(vector: CubeVector, k: number) {
+    return new CubeVector(vector.q * k, vector.r * k, vector.s * k);
+  }
+
+  public static roundLength(vector: CubeVector) {
+    return Math.round((Math.abs(vector.q) + Math.abs(vector.r) + Math.abs(vector.s)) / 2);
+  }
+
+  public static isEqual(vectorA: CubeVector, vectorB: CubeVector) {
+    return vectorA.q === vectorB.q && vectorA.r === vectorB.r && vectorA.s === vectorB.s;
+  }
+
+  public q: number;
+  public r: number;
+  public s: number;
+
+  constructor(q: number, r: number, s: number) {
+    this.q = q;
+    this.r = r;
+    this.s = s;
+  }
+
+  public add(vector: CubeVector) {
+    return new CubeVector(this.q + vector.q, this.r + vector.r, this.s + vector.s);
+  }
+
+  public subtract(vector: CubeVector) {
+    return new CubeVector(this.q - vector.q, this.r - vector.r, this.s - vector.s);
+  }
+
+  public multiply(k: number) {
+    return new CubeVector(this.q * k, this.r * k, this.s * k);
+  }
+
+  public get roundLength() {
+    return Math.round((Math.abs(this.q) + Math.abs(this.r) + Math.abs(this.s)) / 2);
+  }
+
+  public isEqual(vector: CubeVector) {
+    return this.q === vector.q && this.r === vector.r && this.s === vector.s;
+  }
+}

@@ -25,12 +25,12 @@ module.exports = {
 
   output: {
     filename: 'bundle.js',
-  path: path.resolve(__dirname, './dist')
+    path: path.resolve(__dirname, './dist')
   },
 
-  plugins: [ new TypedocWebpackPlugin({ out: '../docs' }) ],
+  plugins: [new TypedocWebpackPlugin({ out: '../docs' })],
 
   resolve: {
-    extensions: [ '.webpack.js', '.web.js', '.ts' ]
+    extensions: ['.webpack.js', '.web.js', '.ts']
   }
 };

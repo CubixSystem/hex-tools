@@ -1,0 +1,7 @@
+{
+  "extends": "../base.tsconfig",
+  "compilerOptions": {
+    "inlineSourceMap": true,
+    "sourceRoot": "./test"
+  }
+}

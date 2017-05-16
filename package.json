@@ -4,15 +4,21 @@
   "description": "",
   "main": "./dist/bundle.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "webpack": "tsc && webpack --watch"
+    "test": "mocha --watch",
+    "tsc-test": "tslint --project ./test && tsc --project ./test --watch",
+    "webpack": "tsc && webpack --watch",
+    "typedoc": "typedoc --out ./docs ./src/tsconfig.json"
   },
   "author": "Kurochkin Oleg",
   "license": "MIT",
   "dependencies": {},
   "devDependencies": {
+    "@types/chai": "^3.5.2",
+    "@types/mocha": "^2.2.41",
     "@types/node": "^7.0.18",
     "@types/webpack": "^2.2.15",
+    "chai": "^3.5.0",
+    "mocha": "^3.4.1",
     "source-map-loader": "^0.2.1",
     "ts-loader": "^2.0.3",
     "tslint": "^5.2.0",
