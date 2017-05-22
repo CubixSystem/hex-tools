@@ -1,6 +1,0 @@
-{
-  "extends": "./base.tsconfig",
-  "include": [
-    "webpack.config.ts"
-  ]
-}

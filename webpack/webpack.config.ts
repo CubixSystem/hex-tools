@@ -4,12 +4,10 @@ import * as path from 'path';
 const TypedocWebpackPlugin = require('typedoc-webpack-plugin');
 
 module.exports = {
-  // Enable sourcemaps for debugging webpack's output.
-  devtool: 'source-map',
+  devtool: 'source-map', // Enable sourcemaps for debugging webpack's output.
 
-  // NOTE ./ - project root directory
   entry: {
-    bundle: './src'
+    bundle: './src' // NOTE ./ - project root directory
   },
 
   module: {
@@ -25,10 +23,10 @@ module.exports = {
 
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, './dist')
+    path: path.resolve(__dirname, '../dist')
   },
 
-  plugins: [new TypedocWebpackPlugin({ out: '../docs' })],
+  plugins: [new TypedocWebpackPlugin({ out: '../docs' }, './src')],
 
   resolve: {
     extensions: ['.webpack.js', '.web.js', '.ts']

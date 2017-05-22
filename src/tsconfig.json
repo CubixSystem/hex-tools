@@ -2,6 +2,8 @@
   "extends": "../base.tsconfig",
   "compilerOptions": {
     "inlineSourceMap": true,
+    "declaration": true,
+    "declarationDir": "../types",
     "outDir": "../dist",
     "rootDir": "./",
     "sourceRoot": "./src"

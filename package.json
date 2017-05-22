@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "description": "",
   "main": "./dist/bundle.js",
+  "types": "./dist/types/index.d.ts",
   "scripts": {
     "test": "mocha --watch",
-    "tsc-test": "tslint --project ./test && tsc --project ./test --watch",
-    "webpack": "tsc && webpack --watch",
-    "typedoc": "typedoc --out ./docs ./src/tsconfig.json"
+    "tsc-test": "tslint --project ./test/tsconfig.json && tsc --watch --project ./test/tsconfig.json",
+    "webpack": "tsc --project ./webpack/tsconfig.json && webpack --watch --config ./webpack/webpack.config.js"
   },
   "author": "Kurochkin Oleg",
   "license": "MIT",
@@ -23,7 +23,7 @@
     "ts-loader": "^2.0.3",
     "tslint": "^5.2.0",
     "tslint-loader": "^3.5.3",
-    "typedoc": "^0.6.0",
+    "typedoc": "^0.7.0",
     "typedoc-webpack-plugin": "^1.1.4",
     "typescript": "^2.3.2",
     "webpack": "^2.5.1"

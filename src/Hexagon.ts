@@ -2,7 +2,7 @@ import { AxialVector } from './AxialVector';
 import { CubeVector } from './CubeVector';
 import { VectorMath } from './VectorMath';
 
-interface IHexParams {
+export interface IHexagonParams {
   q: number;
   r: number;
   s?: number;
@@ -22,7 +22,7 @@ export class Hexagon {
 
   protected position: AxialVector;
 
-  constructor(params: IHexParams) {
+  constructor(params: IHexagonParams) {
     params.s ?
       this.position = VectorMath.cubeToAxial(new CubeVector(params.q, params.r, params.s)) :
       this.position = new AxialVector(params.q, params.r);
