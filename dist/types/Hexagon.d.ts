@@ -11,8 +11,6 @@ export declare class Hexagon {
     size: number;
     height: number;
     width: number;
-    verticalDistance: number;
-    horizontalDistance: number;
     protected position: AxialVector;
     constructor(params: IHexagonParams);
     readonly cubePosition: CubeVector;

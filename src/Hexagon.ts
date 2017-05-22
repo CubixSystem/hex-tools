@@ -17,8 +17,6 @@ export class Hexagon {
   public size: number;
   public height: number;
   public width: number;
-  public verticalDistance: number;
-  public horizontalDistance: number;
 
   protected position: AxialVector;
 
