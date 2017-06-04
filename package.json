@@ -14,10 +14,12 @@
   "dependencies": {},
   "devDependencies": {
     "@types/chai": "^3.5.2",
+    "@types/md5": "^2.1.32",
     "@types/mocha": "^2.2.41",
     "@types/node": "^7.0.18",
     "@types/webpack": "^2.2.15",
     "chai": "^3.5.0",
+    "md5": "^2.2.1",
     "mocha": "^3.4.1",
     "source-map-loader": "^0.2.1",
     "ts-loader": "^2.0.3",

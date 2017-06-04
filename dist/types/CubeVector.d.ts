@@ -1,3 +1,8 @@
+export interface ICubeVectorParams {
+    q?: number;
+    r?: number;
+    s?: number;
+}
 export declare class CubeVector {
     static add(vectorA: CubeVector, vectorB: CubeVector): CubeVector;
     static subtract(vectorA: CubeVector, vectorB: CubeVector): CubeVector;
@@ -7,10 +12,11 @@ export declare class CubeVector {
     q: number;
     r: number;
     s: number;
-    constructor(q: number, r: number, s: number);
+    constructor(q: number | ICubeVectorParams, r?: number, s?: number);
     add(vector: CubeVector): CubeVector;
     subtract(vector: CubeVector): CubeVector;
     multiply(k: number): CubeVector;
     readonly roundLength: number;
     isEqual(vector: CubeVector): boolean;
+    protected complementVector(vector: ICubeVectorParams): void;
 }

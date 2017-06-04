@@ -23,6 +23,8 @@ module.exports = {
 
   output: {
     filename: 'bundle.js',
+    library: 'hex-tools',
+    libraryTarget: 'umd',
     path: path.resolve(__dirname, '../dist')
   },
 

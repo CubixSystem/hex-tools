@@ -1,3 +1,5 @@
+export interface ICubeVectorParams { q?: number; r?: number; s?: number; }
+
 export class CubeVector {
   public static add(vectorA: CubeVector, vectorB: CubeVector) {
     return new CubeVector(vectorA.q + vectorB.q, vectorA.r + vectorB.r, vectorA.s + vectorB.s);
@@ -23,10 +25,12 @@ export class CubeVector {
   public r: number;
   public s: number;
 
-  constructor(q: number, r: number, s: number) {
-    this.q = q;
-    this.r = r;
-    this.s = s;
+  constructor(q: number | ICubeVectorParams, r?: number, s?: number) {
+    if (typeof q === 'number') {
+      this.complementVector({ q, r, s });
+    } else if (typeof q === 'object') {
+      this.complementVector(q);
+    } else { throw new Error('Invalid constructor params'); }
   }
 
   public add(vector: CubeVector) {
@@ -47,5 +51,29 @@ export class CubeVector {
 
   public isEqual(vector: CubeVector) {
     return this.q === vector.q && this.r === vector.r && this.s === vector.s;
+  }
+
+  protected complementVector(vector: ICubeVectorParams) {
+    const q = vector.q;
+    const r = vector.r;
+    const s = vector.s;
+
+    if (typeof q === 'number' && typeof r === 'number' && typeof s === 'number') {
+      this.q = q;
+      this.r = r;
+      this.s = s;
+    } else if (typeof q === 'number' && typeof r === 'number' && typeof s === 'undefined') {
+      this.q = q;
+      this.r = r;
+      this.s = -q - r;
+    } else if (typeof q === 'undefined' && typeof r === 'number' && typeof s === 'number') {
+      this.q = -r - s;
+      this.r = r;
+      this.s = s;
+    } else if (typeof q === 'number' && typeof r === 'undefined' && typeof s === 'number') {
+      this.q = q;
+      this.r = -q - s;
+      this.s = s;
+    }
   }
 }
