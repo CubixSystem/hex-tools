@@ -6,9 +6,9 @@ export interface IHexagonParams {
 }
 export declare class Hexagon {
     static isEqual(hexagonA: Hexagon, hexagonB: Hexagon): boolean;
-    position: AxialVector;
+    protected position: AxialVector;
     constructor(params: IHexagonParams);
-    readonly cubePosition: CubeVector;
-    readonly axialPosition: AxialVector;
+    cubePosition: CubeVector;
+    axialPosition: AxialVector;
     isEqual(hexagon: Hexagon): boolean;
 }

@@ -15,17 +15,6 @@ export interface IHexagonGridParams {
   type: HexagonGridType;
 }
 
-// const Direction = {
-//   NORTH: new Vector3(),
-//   NORTH_EAST: new Vector3(),
-//   EAST: new Vector3(),
-//   SOUTH_EAST: new Vector3(),
-//   SOUTH: new Vector3(),
-//   SOUTH_WEST: new Vector3(),
-//   WEST: new Vector3(),
-//   NORTH_WEST: new Vector3()
-// };
-
 export enum HexagonGridType {
   PARALLELOGRAM,
   TRIANGLE,
@@ -82,9 +71,9 @@ export abstract class HexagonGrid {
 
   public insertHexagon(hexagon: Hexagon, position: (AxialVector | CubeVector)) {
     if (position instanceof AxialVector) {
-      hexagon.position = position;
+      hexagon.axialPosition = position;
     } else {
-      hexagon.position = VectorMath.cubeToAxial(position);
+      hexagon.axialPosition = VectorMath.cubeToAxial(position);
     }
     const hash = Tools.combineHashes(
       Tools.calculateHash(hexagon.axialPosition.q), Tools.calculateHash(hexagon.axialPosition.r));

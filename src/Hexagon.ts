@@ -12,7 +12,7 @@ export class Hexagon {
     return AxialVector.isEqual(hexagonA.axialPosition, hexagonB.axialPosition);
   }
 
-  public position: AxialVector;
+  protected position: AxialVector;
 
   constructor(params: IHexagonParams) {
     params.position instanceof CubeVector ?
@@ -24,8 +24,16 @@ export class Hexagon {
     return VectorMath.axialToCube(this.position);
   }
 
+  public set cubePosition(position: CubeVector) {
+    this.position = VectorMath.cubeToAxial(position);
+  }
+
   public get axialPosition() {
     return this.position;
+  }
+
+  public set axialPosition(position: AxialVector) {
+    this.position = position;
   }
 
   public isEqual(hexagon: Hexagon) {
