@@ -1,1 +1,6 @@
-./tmp/test/*.js
+--compilers ts-node/register
+--require source-map-support/register
+--recursive
+--watch-extensions ts
+
+src/**/*.test.ts

@@ -1,9 +1,0 @@
-{
-  "extends": "../base.tsconfig",
-  "compilerOptions": {
-    "module": "commonjs"
-  },
-  "include": [
-    "webpack.config.ts"
-  ]
-}
