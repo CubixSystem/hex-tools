@@ -8,23 +8,24 @@
     "test": "mocha --opts ./test/mocha.opts",
     "test:watch": "mocha --opts ./test/mocha.opts --watch",
     "coverage": "nyc mocha --opts ./test/mocha.opts",
-    "webpack": "webpack --config ./webpack.config.ts",
+    "webpack": "webpack --config ./webpack/webpack.config.ts",
     "webpack:watch": "webpack --watch --config ./webpack.config.ts",
-    "lint": "yarn lint:src && yarn lint:test && yarn lint:webpack",
+    "lint": "yarn lint:src ; yarn lint:test ; yarn lint:webpack",
     "lint:src": "tslint --project ./src/tsconfig.json --fix",
     "lint:test": "tslint --project ./test/tsconfig.json --fix",
-    "lint:webpack": "tslint webpack.config.ts --fix"
+    "lint:webpack": "tslint --project ./webpack/tsconfig.json --fix",
+    "prepublish": "yarn lint && yarn coverage && yarn webpack"
   },
   "author": "Kurochkin Oleg",
   "license": "MIT",
-  "dependencies": {},
   "devDependencies": {
-    "@types/chai": "latest",
+    "@types/chai": "^4.0.4",
     "@types/md5": "^2.1.32",
     "@types/mocha": "^2.2.42",
-    "@types/node": "^8.0.25",
+    "@types/node": "^8.0.26",
     "@types/webpack": "^3.0.10",
-    "chai": "latest",
+    "chai": "^4.1.2",
+    "md5": "^2.2.1",
     "mocha": "^3.5.0",
     "nyc": "^11.1.0",
     "source-map-loader": "^0.2.1",
@@ -35,7 +36,10 @@
     "tslint-loader": "^3.5.3",
     "typedoc": "^0.8.0",
     "typedoc-webpack-plugin": "^1.1.4",
-    "typescript": "^2.4.2",
+    "typescript": "^2.5.2",
     "webpack": "^3.5.5"
+  },
+  "peerDependencies": {
+    "md5": "^2.2.1"
   }
 }

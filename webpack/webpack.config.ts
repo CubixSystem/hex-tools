@@ -1,8 +1,15 @@
 /* tslint:disable no-var-requires no-console */
 
 import * as path from "path";
-import * as webpack from "webpack";
-const TypedocWebpackPlugin = require("typedoc-webpack-plugin");
+// const TypedocWebpackPlugin = require("typedoc-webpack-plugin");
+
+type ExternalsFunctionElement = (context: any, request: string, callback: (error?: any, result?: any) => void) => void;
+const externals: ExternalsFunctionElement = (_context, request, callback) => {
+  if (/^\w/.test(request)) {
+    console.info(`External deps used: '${request}'`);
+    return callback(null, request);
+  } else { callback(); }
+};
 
 module.exports = {
   devtool: "source-map", // Enable sourcemaps for debugging webpack's output.
@@ -11,15 +18,7 @@ module.exports = {
     bundle: "./src", // NOTE ./ - project root directory
   },
 
-  externals: [
-    (context, request, callback) => {
-      if (/^\w/.test(request)) {
-        console.log(`'${request}' is external module`);
-        return callback(null, request);
-      }
-      callback();
-    },
-  ],
+  externals,
 
   module: {
     rules: [
@@ -39,7 +38,7 @@ module.exports = {
     path: path.resolve(__dirname, "../dist"),
   },
 
-  plugins: [new TypedocWebpackPlugin({ out: "../docs" }, "./src")],
+  // plugins: [new TypedocWebpackPlugin({ out: "../docs" }, "./src")],
 
   resolve: {
     extensions: [".ts"],

@@ -4,14 +4,14 @@
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
     "moduleResolution": "node",
-    "newLine": "lf",
+    "newLine": "LF",
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "preserveConstEnums": true,
     "pretty": true,
     "strict": true,
-    "target": "ES6"
+    "target":"es2016"
   },
   "compileOnSave": false,
   "buildOnSave": false

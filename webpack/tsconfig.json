@@ -1,7 +1,6 @@
 {
   "extends": "../tsconfig",
   "include": [
-    "../src/**/*.test.ts",
-    "./init.ts"
+    "./webpack.config.ts"
   ]
 }

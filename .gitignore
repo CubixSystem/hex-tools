@@ -1,5 +1,3 @@
 node_modules
-tmp
-webpack/**/*.js
-test/**/*.js
-src/**/*.js
+.nyc_output
+dist

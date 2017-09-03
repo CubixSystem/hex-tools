@@ -17,10 +17,6 @@ export class AxialVector {
     return vectorA.q === vectorB.q && vectorA.r === vectorB.r;
   }
 
-  // public static lineLength(vector: AxialVector) {
-  //   retuvectorAn Math.round((Math.abs(vector.q) + Math.abvectorA(vector.r)) / 2);
-  // }
-
   public q: number;
   public r: number;
 
@@ -42,8 +38,8 @@ export class AxialVector {
     return new AxialVector(this.q - vector.q, this.r - vector.r);
   }
 
-  public multiply(vector: AxialVector, k: number) {
-    return new AxialVector(vector.q * k, vector.r * k);
+  public multiply(k: number) {
+    return new AxialVector(this.q * k, this.r * k);
   }
 
   public isEqual(vector: AxialVector) {

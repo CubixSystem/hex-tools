@@ -3,4 +3,5 @@
 --recursive
 --watch-extensions ts
 
+test/init.ts
 src/**/*.test.ts

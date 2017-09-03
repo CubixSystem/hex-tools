@@ -31,8 +31,8 @@ export class Point {
     return new Point(this.x - point.x, this.y - point.y);
   }
 
-  public multiply(point: Point, k: number) {
-    return new Point(point.x * k, point.y * k);
+  public multiply(k: number) {
+    return new Point(this.x * k, this.y * k);
   }
 
   public isEqual(point: Point) {

@@ -1,4 +1,9 @@
 {
+  "rules": {
+    "variable-name": [
+      "allow-leading-underscore"
+    ]
+  },
   "extends": [
     "tslint:recommended"
   ]

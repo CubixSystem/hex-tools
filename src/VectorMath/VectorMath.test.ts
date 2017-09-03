@@ -1,79 +1,58 @@
-import { expect } from "chai";
-import "mocha";
-
 import { AxialVector } from "./../AxialVector";
 import { CubeVector } from "./../CubeVector";
 import { VectorMath } from "./VectorMath";
 
-describe('axialToCube', () => {
-  it(``, () => {
+describe("VectorMath", () => {
+  it("should convert from axial to cube coordinates", () => {
     const vector = VectorMath.axialToCube(new AxialVector(1, 2));
-    expect(vector).to.be.a("object");
-    expect(vector.q).equals(1);
-    expect(vector.r).equals(2);
-    expect(vector.s).equals(-3);
+    vector.should.be.an("object");
+    vector.q.should.equals(1);
+    vector.r.should.equals(2);
+    vector.s.should.equals(-3);
   });
-});
 
-describe("cubeToAxial", () => {
-  it(``, () => {
+  it("should convert from cube to axial coordinates", () => {
     const vector = VectorMath.cubeToAxial(new CubeVector(1, 2, 3));
-    expect(vector).to.be.a("object");
-    expect(vector.q).equals(1);
-    expect(vector.r).equals(2);
+    vector.should.be.an("object");
+    vector.q.should.equals(1);
+    vector.r.should.equals(2);
   });
-});
 
-describe("cubeDistance", () => {
-  it(``, () => {
+  it("should calculate distance between 2 cube vectors", () => {
     const distance = VectorMath.cubeDistance(new CubeVector(1, 1, 1), new CubeVector(3, 3, 3));
-    expect(distance).to.be.a("number");
-    expect(distance).equals(2);
+    distance.should.be.a("number");
+    distance.should.equals(2);
   });
-});
 
-describe("axialDistance", () => {
-  it(``, () => {
+  it("should calculate distance between 2 axial vectors", () => {
     const distance = VectorMath.axialDistance(new AxialVector(1, 1), new AxialVector(3, 3));
-    expect(distance).to.be.a("number");
-    expect(distance).equals(4);
+    distance.should.be.a("number");
+    distance.should.equals(4);
   });
-});
 
-describe("cubeRoundFloor", () => {
-  it(``, () => {
-    const vector = VectorMath.cubeRound(new CubeVector(1.4, 2.4, 3.4));
-    expect(vector).to.be.a("object");
-    expect(vector.q).equals(1);
-    expect(vector.r).equals(2);
-    expect(vector.s).equals(-3);
+  it("should round cube coordinates", () => {
+    let vector = VectorMath.cubeRound(new CubeVector(1.4, 2.4, 3.4));
+    vector.should.be.an("object");
+    vector.q.should.equals(1);
+    vector.r.should.equals(2);
+    vector.s.should.equals(-3);
+
+    vector = VectorMath.cubeRound(new CubeVector(1.6, 2.6, 3.6));
+    vector.should.be.an("object");
+    vector.q.should.equals(2);
+    vector.r.should.equals(3);
+    vector.s.should.equals(-5);
   });
-});
 
-describe("cubeRoundTop", () => {
-  it(``, () => {
-    const vector = VectorMath.cubeRound(new CubeVector(1.6, 2.6, 3.6));
-    expect(vector).to.be.a("object");
-    expect(vector.q).equals(2);
-    expect(vector.r).equals(3);
-    expect(vector.s).equals(-5);
-  });
-});
+  it("should round axial coordinates", () => {
+    let vector = VectorMath.axialRound(new AxialVector(1.4, 2.4));
+    vector.should.be.an("object");
+    vector.q.should.equals(1);
+    vector.r.should.equals(3);
 
-describe("axialRoundFloor", () => {
-  it(``, () => {
-    const vector = VectorMath.axialRound(new AxialVector(1.4, 2.4));
-    expect(vector).to.be.a("object");
-    expect(vector.q).equals(1);
-    expect(vector.r).equals(3);
-  });
-});
-
-describe("axialRoundTop", () => {
-  it(``, () => {
-    const vector = VectorMath.axialRound(new AxialVector(1.6, 2.6));
-    expect(vector).to.be.a("object");
-    expect(vector.q).equals(2);
-    expect(vector.r).equals(2);
+    vector = VectorMath.axialRound(new AxialVector(1.6, 2.6));
+    vector.should.be.an("object");
+    vector.q.should.equals(2);
+    vector.r.should.equals(2);
   });
 });
