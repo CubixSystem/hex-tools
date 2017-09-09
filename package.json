@@ -9,7 +9,7 @@
     "test:watch": "mocha --opts ./test/mocha.opts --watch",
     "coverage": "nyc mocha --opts ./test/mocha.opts",
     "webpack": "webpack --config ./webpack/webpack.config.ts",
-    "webpack:watch": "webpack --watch --config ./webpack.config.ts",
+    "webpack:watch": "webpack --watch --config ./webpack/webpack.config.ts",
     "lint": "yarn lint:src ; yarn lint:test ; yarn lint:webpack",
     "lint:src": "tslint --project ./src/tsconfig.json --fix",
     "lint:test": "tslint --project ./test/tsconfig.json --fix",
@@ -21,23 +21,23 @@
   "devDependencies": {
     "@types/chai": "^4.0.4",
     "@types/md5": "^2.1.32",
-    "@types/mocha": "^2.2.42",
-    "@types/node": "^8.0.26",
+    "@types/mocha": "^2.2.43",
+    "@types/node": "^8.0.28",
     "@types/webpack": "^3.0.10",
     "chai": "^4.1.2",
     "md5": "^2.2.1",
     "mocha": "^3.5.0",
-    "nyc": "^11.1.0",
+    "nyc": "^11.2.1",
     "source-map-loader": "^0.2.1",
-    "source-map-support": "^0.4.16",
-    "ts-loader": "^2.3.4",
+    "source-map-support": "^0.4.17",
+    "ts-loader": "^2.3.6",
     "ts-node": "^3.3.0",
     "tslint": "^5.7.0",
     "tslint-loader": "^3.5.3",
     "typedoc": "^0.8.0",
     "typedoc-webpack-plugin": "^1.1.4",
     "typescript": "^2.5.2",
-    "webpack": "^3.5.5"
+    "webpack": "^3.5.6"
   },
   "peerDependencies": {
     "md5": "^2.2.1"
