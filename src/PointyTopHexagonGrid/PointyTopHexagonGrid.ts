@@ -1,5 +1,6 @@
 import { AxialVector } from "../AxialVector";
 import { CubeVector } from "../CubeVector";
+import { Hexagon } from "../Hexagon";
 import { HexagonGrid } from "../HexagonGrid";
 import { Point } from "../Point";
 import { VectorMath } from "../VectorMath";
@@ -22,7 +23,7 @@ export const PointyTopDirectionVector = new Map([
   [PointyTopNeighborDirection.WEST, new CubeVector(1, 0, -1)],
 ]);
 
-export class PointyTopHexagonGrid extends HexagonGrid {
+export class PointyTopHexagonGrid<H extends Hexagon> extends HexagonGrid<H> {
   protected static axialToPoint(vector: AxialVector, hexSize: number) {
     const q = vector.q;
     const r = vector.r;

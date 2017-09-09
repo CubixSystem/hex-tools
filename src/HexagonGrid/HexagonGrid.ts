@@ -23,7 +23,7 @@ export enum HexagonGridType {
   RECTANGLE,
 }
 
-export abstract class HexagonGrid {
+export abstract class HexagonGrid<H extends Hexagon> {
   public static distance(hexagonA: Hexagon, hexagonB: Hexagon) {
     return hexagonA.cubePosition.subtract(hexagonB.cubePosition).roundLength;
   }
@@ -32,7 +32,7 @@ export abstract class HexagonGrid {
   public readonly horizontalDistance: number;
   public readonly size: IHexagonGridSize;
   public readonly hexagonSize: number;
-  public hexagons: Map<string, Hexagon> = new Map();
+  public hexagons: Map<string, H> = new Map();
   public readonly type: HexagonGridType;
 
   constructor(params: IHexagonGridParams) {
@@ -50,7 +50,7 @@ export abstract class HexagonGrid {
   public abstract getHexagonNeighborPositions(position: (AxialVector | CubeVector)): CubeVector[];
   public abstract pointToAxial(point: Point): AxialVector;
 
-  public insertHexagon(hexagon: Hexagon, position: (AxialVector | CubeVector)) {
+  public insertHexagon(hexagon: H, position: (AxialVector | CubeVector)) {
     if (position instanceof AxialVector) {
       hexagon.axialPosition = position;
     } else {
@@ -67,7 +67,7 @@ export abstract class HexagonGrid {
     this.hexagons.delete(hash);
   }
 
-  public replaceHexagon(hexagon: Hexagon, position: (AxialVector | CubeVector)) {
+  public replaceHexagon(hexagon: H, position: (AxialVector | CubeVector)) {
     this.removeHexagon(position);
     this.insertHexagon(hexagon, position);
   }
@@ -79,7 +79,7 @@ export abstract class HexagonGrid {
   }
 
   public getHexagonNeighbors(position: (AxialVector | CubeVector)) {
-    const neighbors: Hexagon[] = [];
+    const neighbors: H[] = [];
     const neighborPositions = this.getHexagonNeighborPositions(position);
     neighborPositions.forEach((neighborPosition) => {
       const hexagon = this.getHexagon(neighborPosition);
@@ -88,7 +88,7 @@ export abstract class HexagonGrid {
     return neighbors;
   }
 
-  public generateGrid(factoryFunction: () => Hexagon) {
+  public generateGrid(factoryFunction: () => H) {
     switch (this.type) {
       case HexagonGridType.TRIANGLE:
         this.generateTriangleGrid(factoryFunction);
@@ -105,7 +105,7 @@ export abstract class HexagonGrid {
     }
   }
 
-  protected generateTriangleGrid(factoryFunction: () => Hexagon) {
+  protected generateTriangleGrid(factoryFunction: () => H) {
     const size = this.size.width;
     for (let q = 0; q <= size; q++) {
       for (let r = 0; r < size - q; r++) {
@@ -120,7 +120,7 @@ export abstract class HexagonGrid {
     // }
   }
 
-  protected generateParallelogramGrid(factoryFunction: () => Hexagon) {
+  protected generateParallelogramGrid(factoryFunction: () => H) {
     for (let j = 0; j <= this.size.width; j++) {
       for (let i = 0; i <= this.size.height; i++) {
         this.insertHexagon(factoryFunction.call(this), new CubeVector({ q: j, r: i }));
@@ -130,7 +130,7 @@ export abstract class HexagonGrid {
     }
   }
 
-  protected generateHexagonGrid(factoryFunction: () => Hexagon) {
+  protected generateHexagonGrid(factoryFunction: () => H) {
     const mapRadius = this.size.width;
     for (let q = -mapRadius; q <= mapRadius; q++) {
       const r1 = Math.max(-mapRadius, -q - mapRadius);
@@ -141,7 +141,7 @@ export abstract class HexagonGrid {
     }
   }
 
-  protected generateRectangleGrid(factoryFunction: () => Hexagon) {
+  protected generateRectangleGrid(factoryFunction: () => H) {
     for (let i = 0; i < this.size.height; i++) {
       const offset = Math.floor(i / 2);
       for (let j = -offset; j < this.size.width - offset; j++) {
