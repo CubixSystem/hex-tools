@@ -1,7 +1,5 @@
 {
   "compilerOptions": {
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
     "moduleResolution": "node",
     "newLine": "LF",
@@ -11,8 +9,7 @@
     "preserveConstEnums": true,
     "pretty": true,
     "strict": true,
-    "target":"es2016"
+    "target": "es2017"
   },
-  "compileOnSave": false,
-  "buildOnSave": false
+  "compileOnSave": false
 }

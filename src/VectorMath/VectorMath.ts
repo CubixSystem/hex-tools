@@ -2,7 +2,7 @@ import { AxialVector } from "../AxialVector";
 import { CubeVector } from "../CubeVector";
 
 export class VectorMath {
-  public static axialToCube(vector: AxialVector) {
+  public static axialToCube(vector: AxialVector): CubeVector {
     const q = vector.q;
     const r = vector.r;
     const s = -q - r;
@@ -10,25 +10,29 @@ export class VectorMath {
     return new CubeVector(q, r, s);
   }
 
-  public static cubeToAxial(vector: CubeVector) {
+  public static cubeToAxial(vector: CubeVector): AxialVector {
     return new AxialVector(vector.q, vector.r);
   }
 
-  public static cubeDistance(vectorA: CubeVector, vectorB: CubeVector) {
+  public static cubeDistance(vectorA: CubeVector, vectorB: CubeVector): number {
     return Math.max(
       Math.abs(vectorA.q - vectorB.q),
       Math.abs(vectorA.r - vectorB.r),
-      Math.abs(vectorA.s - vectorB.s));
+      Math.abs(vectorA.s - vectorB.s),
+    );
   }
 
-  public static axialDistance(vectorA: AxialVector, vectorB: AxialVector) {
+  public static axialDistance(
+    vectorA: AxialVector,
+    vectorB: AxialVector,
+  ): number {
     const ac = VectorMath.axialToCube(vectorA);
     const bc = VectorMath.axialToCube(vectorB);
 
     return VectorMath.cubeDistance(ac, bc);
   }
 
-  public static cubeRound(vector: CubeVector) {
+  public static cubeRound(vector: CubeVector): CubeVector {
     let rq = Math.round(vector.q);
     let rr = Math.round(vector.r);
     let rs = Math.round(vector.s);
@@ -48,9 +52,9 @@ export class VectorMath {
     return new CubeVector(rq, rr, rs);
   }
 
-  public static axialRound(vector: AxialVector) {
+  public static axialRound(vector: AxialVector): AxialVector {
     return VectorMath.cubeToAxial(
-      VectorMath.cubeRound(
-        VectorMath.axialToCube(vector)));
+      VectorMath.cubeRound(VectorMath.axialToCube(vector)),
+    );
   }
 }

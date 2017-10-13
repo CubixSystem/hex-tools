@@ -24,7 +24,7 @@ export enum HexagonGridType {
 }
 
 export abstract class HexagonGrid<H extends Hexagon> {
-  public static distance(hexagonA: Hexagon, hexagonB: Hexagon) {
+  public static distance(hexagonA: Hexagon, hexagonB: Hexagon): number {
     return hexagonA.cubePosition.subtract(hexagonB.cubePosition).roundLength;
   }
 
@@ -47,48 +47,71 @@ export abstract class HexagonGrid<H extends Hexagon> {
   }
 
   public abstract axialToPoint(vector: AxialVector): Point;
-  public abstract getHexagonNeighborPositions(position: (AxialVector | CubeVector)): CubeVector[];
-  public abstract pointToAxial(point: Point): AxialVector;
+  public abstract getHexagonNeighborPositions(
+    position: AxialVector | CubeVector,
+  ): CubeVector[];
+  public abstract pointToRoundAxial(point: Point): AxialVector;
 
-  public insertHexagon(hexagon: H, position: (AxialVector | CubeVector)) {
-    if (position instanceof AxialVector) {
+  public insertHexagon(hexagon: H, position: AxialVector | CubeVector): void {
+    if (position instanceof CubeVector) {
+      hexagon.cubePosition = position;
+    } else if (position instanceof AxialVector) {
       hexagon.axialPosition = position;
     } else {
-      hexagon.axialPosition = VectorMath.cubeToAxial(position);
+      throw new TypeError(
+        `Wrong position: ${position}, expect AxialVector or CubeVector`,
+      );
     }
+
     const hash = Tools.combineHashes(
-      Tools.calculateHash(hexagon.axialPosition.q), Tools.calculateHash(hexagon.axialPosition.r));
+      Tools.calculateHash(hexagon.axialPosition.q),
+      Tools.calculateHash(hexagon.axialPosition.r),
+    );
+    if (this.hexagons.get(hash)) {
+      throw new Error(`Hexagon: ${hexagon.axialPosition} already exist`);
+    }
     this.hexagons.set(hash, hexagon);
   }
 
-  public removeHexagon(position: (AxialVector | CubeVector)) {
+  public removeHexagon(position: AxialVector | CubeVector): void {
     const hash = Tools.combineHashes(
-      Tools.calculateHash(position.q), Tools.calculateHash(position.r));
+      Tools.calculateHash(position.q),
+      Tools.calculateHash(position.r),
+    );
     this.hexagons.delete(hash);
   }
 
-  public replaceHexagon(hexagon: H, position: (AxialVector | CubeVector)) {
+  public replaceHexagon(hexagon: H, position: AxialVector | CubeVector): void {
     this.removeHexagon(position);
     this.insertHexagon(hexagon, position);
   }
 
-  public getHexagon(position: (AxialVector | CubeVector)) {
+  public getHexagon(position: AxialVector | CubeVector): H {
     const hash = Tools.combineHashes(
-      Tools.calculateHash(position.q), Tools.calculateHash(position.r));
-    return this.hexagons.get(hash);
+      Tools.calculateHash(position.q),
+      Tools.calculateHash(position.r),
+    );
+    const hexagon = this.hexagons.get(hash);
+    if (!hexagon) {
+      throw new Error(`Wrong tile coordinates: ${position}`);
+    } else {
+      return hexagon;
+    }
   }
 
-  public getHexagonNeighbors(position: (AxialVector | CubeVector)) {
+  public getHexagonNeighbors(position: AxialVector | CubeVector): H[] {
     const neighbors: H[] = [];
     const neighborPositions = this.getHexagonNeighborPositions(position);
-    neighborPositions.forEach((neighborPosition) => {
+    neighborPositions.forEach(neighborPosition => {
       const hexagon = this.getHexagon(neighborPosition);
-      if (hexagon) { neighbors.push(hexagon); }
+      if (hexagon) {
+        neighbors.push(hexagon);
+      }
     });
     return neighbors;
   }
 
-  public generateGrid(factoryFunction: () => H) {
+  public generateGrid(factoryFunction: (position: AxialVector) => H): void {
     switch (this.type) {
       case HexagonGridType.TRIANGLE:
         this.generateTriangleGrid(factoryFunction);
@@ -105,11 +128,14 @@ export abstract class HexagonGrid<H extends Hexagon> {
     }
   }
 
-  protected generateTriangleGrid(factoryFunction: () => H) {
+  protected generateTriangleGrid(
+    factoryFunction: (position: AxialVector) => H,
+  ): void {
     const size = this.size.width;
     for (let q = 0; q <= size; q++) {
       for (let r = 0; r < size - q; r++) {
-        this.insertHexagon(factoryFunction.call(this), new AxialVector(q, r));
+        const position = new AxialVector(q, r);
+        this.insertHexagon(factoryFunction.call(this, position), position);
       }
     }
 
@@ -120,32 +146,44 @@ export abstract class HexagonGrid<H extends Hexagon> {
     // }
   }
 
-  protected generateParallelogramGrid(factoryFunction: () => H) {
+  protected generateParallelogramGrid(
+    factoryFunction: (position: AxialVector) => H,
+  ): void {
     for (let j = 0; j <= this.size.width; j++) {
       for (let i = 0; i <= this.size.height; i++) {
-        this.insertHexagon(factoryFunction.call(this), new CubeVector({ q: j, r: i }));
+        const position = new CubeVector({ q: j, r: i });
+        this.insertHexagon(
+          factoryFunction.call(this, VectorMath.cubeToAxial(position)),
+          position,
+        );
         // this.insertHexagon(factoryFunction.call(this), new CubeVector({ s: j, q: i }));
         // this.insertHexagon(factoryFunction.call(this), new CubeVector({ r: j, s: i }));
       }
     }
   }
 
-  protected generateHexagonGrid(factoryFunction: () => H) {
+  protected generateHexagonGrid(
+    factoryFunction: (position: AxialVector) => H,
+  ): void {
     const mapRadius = this.size.width;
     for (let q = -mapRadius; q <= mapRadius; q++) {
       const r1 = Math.max(-mapRadius, -q - mapRadius);
       const r2 = Math.min(mapRadius, -q + mapRadius);
       for (let r = r1; r <= r2; r++) {
-        this.insertHexagon(factoryFunction.call(this), new AxialVector(q, r));
+        const position = new AxialVector(q, r);
+        this.insertHexagon(factoryFunction.call(this, position), position);
       }
     }
   }
 
-  protected generateRectangleGrid(factoryFunction: () => H) {
+  protected generateRectangleGrid(
+    factoryFunction: (position: AxialVector) => H,
+  ): void {
     for (let i = 0; i < this.size.height; i++) {
       const offset = Math.floor(i / 2);
       for (let j = -offset; j < this.size.width - offset; j++) {
-        this.insertHexagon(factoryFunction.call(this), new AxialVector({ q: j, r: i }));
+        const position = new AxialVector({ q: j, r: i });
+        this.insertHexagon(factoryFunction.call(this, position), position);
       }
     }
   }

@@ -19,13 +19,19 @@ describe("VectorMath", () => {
   });
 
   it("should calculate distance between 2 cube vectors", () => {
-    const distance = VectorMath.cubeDistance(new CubeVector(1, 1, 1), new CubeVector(3, 3, 3));
+    const distance = VectorMath.cubeDistance(
+      new CubeVector(1, 1, 1),
+      new CubeVector(3, 3, 3),
+    );
     distance.should.be.a("number");
     distance.should.equals(2);
   });
 
   it("should calculate distance between 2 axial vectors", () => {
-    const distance = VectorMath.axialDistance(new AxialVector(1, 1), new AxialVector(3, 3));
+    const distance = VectorMath.axialDistance(
+      new AxialVector(1, 1),
+      new AxialVector(3, 3),
+    );
     distance.should.be.a("number");
     distance.should.equals(4);
   });

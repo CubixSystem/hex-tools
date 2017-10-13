@@ -3,12 +3,18 @@
 import * as path from "path";
 // const TypedocWebpackPlugin = require("typedoc-webpack-plugin");
 
-type ExternalsFunctionElement = (context: any, request: string, callback: (error?: any, result?: any) => void) => void;
+type ExternalsFunctionElement = (
+  context: any,
+  request: string,
+  callback: (error?: any, result?: any) => void,
+) => void;
 const externals: ExternalsFunctionElement = (_context, request, callback) => {
   if (/^\w/.test(request)) {
     console.info(`External deps used: '${request}'`);
-    return callback(null, request);
-  } else { callback(); }
+    return callback(undefined, request);
+  } else {
+    callback();
+  }
 };
 
 module.exports = {

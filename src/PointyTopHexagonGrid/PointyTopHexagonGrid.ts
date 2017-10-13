@@ -14,7 +14,7 @@ export enum PointyTopNeighborDirection {
   WEST,
 }
 
-export const PointyTopDirectionVector = new Map([
+export const pointyTopDirections = new Map([
   [PointyTopNeighborDirection.EAST, new CubeVector(-1, 0, 1)],
   [PointyTopNeighborDirection.NORTH_EAST, new CubeVector(-1, 1, 0)],
   [PointyTopNeighborDirection.NORTH_WEST, new CubeVector(0, 1, -1)],
@@ -24,7 +24,7 @@ export const PointyTopDirectionVector = new Map([
 ]);
 
 export class PointyTopHexagonGrid<H extends Hexagon> extends HexagonGrid<H> {
-  protected static axialToPoint(vector: AxialVector, hexSize: number) {
+  protected static axialToPoint(vector: AxialVector, hexSize: number): Point {
     const q = vector.q;
     const r = vector.r;
     const x = hexSize * Math.sqrt(3) * (q + r / 2);
@@ -32,26 +32,31 @@ export class PointyTopHexagonGrid<H extends Hexagon> extends HexagonGrid<H> {
     return new Point(x, y);
   }
 
-  protected static pointToAxial(point: Point, hexSize: number) {
+  protected static pointToRoundAxial(
+    point: Point,
+    hexSize: number,
+  ): AxialVector {
     const q = (point.x * Math.sqrt(3) / 3 - point.y / 3) / hexSize;
     const r = point.y * 2 / 3 / hexSize;
     return VectorMath.axialRound(new AxialVector(q, r));
   }
 
-  public axialToPoint(vector: AxialVector) {
+  public axialToPoint(vector: AxialVector): Point {
     return PointyTopHexagonGrid.axialToPoint(vector, this.hexagonSize);
   }
 
-  public pointToAxial(point: Point) {
-    return PointyTopHexagonGrid.pointToAxial(point, this.hexagonSize);
+  public pointToRoundAxial(point: Point): AxialVector {
+    return PointyTopHexagonGrid.pointToRoundAxial(point, this.hexagonSize);
   }
 
-  public getHexagonNeighborPositions(position: (AxialVector | CubeVector)) {
+  public getHexagonNeighborPositions(
+    position: AxialVector | CubeVector,
+  ): CubeVector[] {
     const neighborPositions: CubeVector[] = [];
     const hexagon = this.getHexagon(position);
     if (hexagon) {
-      PointyTopDirectionVector.forEach((vector) => {
-        neighborPositions.push(hexagon.cubePosition.add(vector));
+      pointyTopDirections.forEach(direction => {
+        neighborPositions.push(hexagon.cubePosition.add(direction));
       });
     }
     return neighborPositions;

@@ -60,14 +60,10 @@ describe("Point", () => {
     const pointB = new Point(0, 0);
     const pointC = new Point(0, 1);
 
-    Point.isEqual(pointA, pointB)
-      .should.equals(true);
-    Point.isEqual(pointA, pointC)
-      .should.equals(false);
+    Point.isEqual(pointA, pointB).should.equals(true);
+    Point.isEqual(pointA, pointC).should.equals(false);
 
-    pointA.isEqual(pointB)
-      .should.equals(true);
-    pointA.isEqual(pointC)
-      .should.equals(false);
+    pointA.isEqual(pointB).should.equals(true);
+    pointA.isEqual(pointC).should.equals(false);
   });
 });

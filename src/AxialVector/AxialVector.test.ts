@@ -60,14 +60,10 @@ describe("AxialVector", () => {
     const vectorB = new AxialVector(0, 0);
     const vectorC = new AxialVector(0, 1);
 
-    AxialVector.isEqual(vectorA, vectorB)
-      .should.equals(true);
-    AxialVector.isEqual(vectorA, vectorC)
-      .should.equals(false);
+    AxialVector.isEqual(vectorA, vectorB).should.equals(true);
+    AxialVector.isEqual(vectorA, vectorC).should.equals(false);
 
-    vectorA.isEqual(vectorB)
-      .should.equals(true);
-    vectorA.isEqual(vectorC)
-      .should.equals(false);
+    vectorA.isEqual(vectorB).should.equals(true);
+    vectorA.isEqual(vectorC).should.equals(false);
   });
 });

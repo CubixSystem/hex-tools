@@ -1,7 +1,6 @@
---compilers ts-node/register
+--require ts-node/register
 --require source-map-support/register
---recursive
 --watch-extensions ts
 
-test/init.ts
+test/bootstrap.ts
 src/**/*.test.ts

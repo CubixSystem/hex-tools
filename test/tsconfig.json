@@ -1,7 +1,4 @@
 {
   "extends": "../tsconfig",
-  "include": [
-    "../src/**/*.test.ts",
-    "./init.ts"
-  ]
+  "include": ["../src/**/*.test.ts", "./bootstrap.ts"]
 }
