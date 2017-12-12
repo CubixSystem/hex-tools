@@ -1,6 +1,4 @@
-import { AxialVector } from "../AxialVector";
-import { CubeVector } from "../CubeVector";
-import { VectorMath } from "../VectorMath";
+import { AxialVector, CubeVector, VectorMath } from "@vectors";
 
 export interface IHexagonParams {
   position: AxialVector | CubeVector;

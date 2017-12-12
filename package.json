@@ -1,7 +1,7 @@
 {
   "name": "hex-tools",
   "version": "1.0.0",
-  "description": "",
+  "description": "Tools for hexagon based grids",
   "main": "./dist/bundle.js",
   "types": "./dist/types/index.d.ts",
   "scripts": {

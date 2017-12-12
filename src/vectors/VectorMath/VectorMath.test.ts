@@ -1,5 +1,5 @@
-import { AxialVector } from "./../AxialVector";
-import { CubeVector } from "./../CubeVector";
+import { AxialVector } from "../AxialVector";
+import { CubeVector } from "../CubeVector";
 import { VectorMath } from "./VectorMath";
 
 describe("VectorMath", () => {

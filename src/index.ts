@@ -1,7 +1,15 @@
-export * from "./Hexagon";
-export * from "./AxialVector";
-export * from "./CubeVector";
-export * from "./HexagonGrid";
-export * from "./PointyTopHexagonGrid";
-export * from "./VectorMath";
-export * from "./Point";
+export {
+  PointyTopHexagonGrid,
+  PointyTopNeighborDirection,
+  IHexagonGridParams,
+  IHexagonGridSize,
+  Hexagon,
+  HexagonGridType,
+} from "@hexagons";
+
+export {
+  AxialVector,
+  CubeVector,
+  IAxialVectorParams,
+  ICubeVectorParams,
+} from "@vectors";

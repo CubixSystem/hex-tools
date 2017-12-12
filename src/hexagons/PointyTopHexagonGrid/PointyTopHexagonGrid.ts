@@ -1,9 +1,5 @@
-import { AxialVector } from "../AxialVector";
-import { CubeVector } from "../CubeVector";
-import { Hexagon } from "../Hexagon";
-import { HexagonGrid } from "../HexagonGrid";
-import { Point } from "../Point";
-import { VectorMath } from "../VectorMath";
+import { Hexagon, HexagonGrid } from "@hexagons";
+import { AxialVector, CubeVector, Point, VectorMath } from "@vectors";
 
 export enum PointyTopNeighborDirection {
   EAST,
@@ -49,16 +45,14 @@ export class PointyTopHexagonGrid<H extends Hexagon> extends HexagonGrid<H> {
     return PointyTopHexagonGrid.pointToRoundAxial(point, this.hexagonSize);
   }
 
-  public getHexagonNeighborPositions(
+  public getHexagonNeighborsPositions(
     position: AxialVector | CubeVector,
   ): CubeVector[] {
     const neighborPositions: CubeVector[] = [];
     const hexagon = this.getHexagon(position);
-    if (hexagon) {
-      pointyTopDirections.forEach(direction => {
-        neighborPositions.push(hexagon.cubePosition.add(direction));
-      });
-    }
+    pointyTopDirections.forEach(direction => {
+      neighborPositions.push(hexagon.cubePosition.add(direction));
+    });
     return neighborPositions;
   }
 }

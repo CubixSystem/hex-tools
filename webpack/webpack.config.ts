@@ -1,7 +1,4 @@
-/* tslint:disable no-var-requires no-console */
-
 import * as path from "path";
-// const TypedocWebpackPlugin = require("typedoc-webpack-plugin");
 
 type ExternalsFunctionElement = (
   context: any,
@@ -10,6 +7,7 @@ type ExternalsFunctionElement = (
 ) => void;
 const externals: ExternalsFunctionElement = (_context, request, callback) => {
   if (/^\w/.test(request)) {
+    // tslint:disable-next-line:no-console
     console.info(`External deps used: '${request}'`);
     return callback(undefined, request);
   } else {
@@ -44,9 +42,12 @@ module.exports = {
     path: path.resolve(__dirname, "../dist"),
   },
 
-  // plugins: [new TypedocWebpackPlugin({ out: "../docs" }, "./src")],
-
   resolve: {
+    alias: {
+      "@hexagons": path.resolve(__dirname, "../src/hexagons"),
+      "@tools": path.resolve(__dirname, "../src/Tools"),
+      "@vectors": path.resolve(__dirname, "../src/vectors"),
+    },
     extensions: [".ts"],
   },
 };
