@@ -1,8 +1,7 @@
 // tslint:disable:no-unused-expression
 
-import { AxialVector } from "../AxialVector";
-import { CubeVector } from "../CubeVector";
-import { Hexagon } from "../Hexagon";
+import { Hexagon } from "../../hexagons";
+import { AxialVector, CubeVector } from "../../vectors";
 
 describe("Hexagon", () => {
   const hexagonParams = { position: new AxialVector(0, 0), size: 5 };

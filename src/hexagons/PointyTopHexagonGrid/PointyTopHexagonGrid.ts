@@ -1,5 +1,5 @@
-import { Hexagon, HexagonGrid } from "@hexagons";
-import { AxialVector, CubeVector, Point, VectorMath } from "@vectors";
+import { Hexagon, HexagonGrid } from "../../hexagons";
+import { AxialVector, CubeVector, Point, VectorMath } from "../../vectors";
 
 export enum PointyTopNeighborDirection {
   EAST,

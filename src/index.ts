@@ -4,12 +4,13 @@ export {
   IHexagonGridParams,
   IHexagonGridSize,
   Hexagon,
+  IHexagonParams,
   HexagonGridType,
-} from "@hexagons";
+} from "./hexagons";
 
 export {
   AxialVector,
   CubeVector,
   IAxialVectorParams,
   ICubeVectorParams,
-} from "@vectors";
+} from "./vectors";

@@ -1,5 +1,5 @@
-import { Hexagon } from "@hexagons";
-import { AxialVector, CubeVector, VectorMath } from "@vectors";
+import { Hexagon } from "../../../hexagons";
+import { AxialVector, CubeVector, VectorMath } from "../../../vectors";
 import { HexagonGridType, IHexagonGridSize } from "../types";
 
 export interface IGridGeneratorParams<H extends Hexagon> {

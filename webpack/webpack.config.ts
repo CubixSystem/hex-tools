@@ -43,11 +43,6 @@ module.exports = {
   },
 
   resolve: {
-    alias: {
-      "@hexagons": path.resolve(__dirname, "../src/hexagons"),
-      "@tools": path.resolve(__dirname, "../src/Tools"),
-      "@vectors": path.resolve(__dirname, "../src/vectors"),
-    },
     extensions: [".ts"],
   },
 };

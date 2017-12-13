@@ -6,13 +6,6 @@
     "declarationDir": "../types",
     "outDir": "../dist",
     "rootDir": "./",
-    "baseUrl": "./",
-    "sourceRoot": "./src",
-    "paths": {
-      "@vectors": ["vectors"],
-      "@hexagons": ["hexagons"],
-      "@tools": ["Tools"]
-    }
-  },
-  "exclude": ["**/*.test.ts"]
+    "sourceRoot": "./src"
+  }
 }

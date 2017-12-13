@@ -1,6 +1,6 @@
-import { Hexagon } from "@hexagons";
-import { Tools } from "@tools";
-import { AxialVector, CubeVector, Point } from "@vectors";
+import { Hexagon } from "../../hexagons";
+import { Tools } from "../../Tools";
+import { AxialVector, CubeVector, Point } from "../../vectors";
 import { GridGenerator } from "./GridGenerator";
 import { HexagonGridType, IHexagonGridSize } from "./types";
 
