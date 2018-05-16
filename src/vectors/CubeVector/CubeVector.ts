@@ -39,9 +39,9 @@ export class CubeVector {
     );
   }
 
-  public q: number;
-  public r: number;
-  public s: number;
+  public q!: number;
+  public r!: number;
+  public s!: number;
 
   constructor(q: number | ICubeVectorParams, r?: number, s?: number) {
     if (typeof q === "number") {

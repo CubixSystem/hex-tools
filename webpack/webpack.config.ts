@@ -24,6 +24,8 @@ module.exports = {
 
   externals,
 
+  mode: "production",
+
   module: {
     rules: [
       // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
