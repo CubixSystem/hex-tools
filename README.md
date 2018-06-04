@@ -1,2 +1,2 @@
 # hex-tools
-All you need for hex grid operations
+Library for hexagon grids game development
