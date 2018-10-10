@@ -10,11 +10,12 @@
     "coverage": "nyc mocha --opts ./test/mocha.opts",
     "webpack": "webpack --config ./webpack/webpack.config.ts",
     "webpack:watch": "webpack --watch --config ./webpack/webpack.config.ts",
-    "lint": "yarn lint:src && yarn lint:test && yarn lint:webpack",
+    "lint": "npm run lint:src && npm run lint:test && npm run lint:webpack",
     "lint:src": "tslint --project ./src/tsconfig.json --fix",
     "lint:test": "tslint --project ./test/tsconfig.json --fix",
     "lint:webpack": "tslint --project ./webpack/tsconfig.json --fix",
-    "prepare": "yarn lint && yarn coverage && yarn webpack"
+    "prepare": "npm run prettier && npm run lint && npm run coverage && npm run webpack",
+    "prettier": "prettier --write 'src/**/*.{ts,json}'"
   },
   "author": "Kurochkin Oleg",
   "license": "MIT",
@@ -28,6 +29,7 @@
     "md5": "^2.2.1",
     "mocha": "^5.2.0",
     "nyc": "^13.0.1",
+    "prettier": "^1.14.3",
     "source-map-loader": "^0.2.4",
     "source-map-support": "^0.5.9",
     "ts-loader": "^5.2.1",

@@ -26,10 +26,10 @@ export abstract class HexagonGrid<H extends Hexagon> {
 
   constructor(params: IHexagonGridParams) {
     const hexagonHeight = params.hexagonSize * 2;
-    const hexagonWidth = Math.sqrt(3) / 2 * hexagonHeight;
+    const hexagonWidth = (Math.sqrt(3) / 2) * hexagonHeight;
 
     this.hexagonSize = params.hexagonSize;
-    this.verticalDistance = hexagonHeight * 3 / 4;
+    this.verticalDistance = (hexagonHeight * 3) / 4;
     this.horizontalDistance = hexagonWidth;
     this.size = params.size;
     this.type = params.type;

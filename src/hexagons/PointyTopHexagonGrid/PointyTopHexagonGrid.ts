@@ -24,7 +24,7 @@ export class PointyTopHexagonGrid<H extends Hexagon> extends HexagonGrid<H> {
     const q = vector.q;
     const r = vector.r;
     const x = hexSize * Math.sqrt(3) * (q + r / 2);
-    const y = hexSize * 3 / 2 * r;
+    const y = ((hexSize * 3) / 2) * r;
     return new Point(x, y);
   }
 
@@ -32,8 +32,8 @@ export class PointyTopHexagonGrid<H extends Hexagon> extends HexagonGrid<H> {
     point: Point,
     hexSize: number,
   ): AxialVector {
-    const q = (point.x * Math.sqrt(3) / 3 - point.y / 3) / hexSize;
-    const r = point.y * 2 / 3 / hexSize;
+    const q = ((point.x * Math.sqrt(3)) / 3 - point.y / 3) / hexSize;
+    const r = (point.y * 2) / 3 / hexSize;
     return VectorMath.axialRound(new AxialVector(q, r));
   }
 
