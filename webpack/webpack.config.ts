@@ -15,7 +15,7 @@ const externals: ExternalsFunctionElement = (_context, request, callback) => {
   }
 };
 
-module.exports = {
+const baseConfig = {
   devtool: "source-map", // Enable sourcemaps for debugging webpack's output.
 
   entry: {
@@ -48,3 +48,15 @@ module.exports = {
     extensions: [".ts"],
   },
 };
+
+const serverConfig = {
+  ...baseConfig,
+  output: {
+    ...baseConfig.output,
+    filename: "bundle.node.js",
+  },
+  target: "node",
+};
+const clientConfig = baseConfig;
+
+module.exports = [serverConfig, clientConfig];

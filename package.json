@@ -2,7 +2,8 @@
   "name": "hex-tools",
   "version": "1.0.0",
   "description": "Tools for hexagon based grids",
-  "main": "./dist/bundle.js",
+  "main": "./dist/bundle.node.js",
+  "browser": "./dist/bundle.js",
   "types": "./dist/types/index.d.ts",
   "scripts": {
     "test": "mocha --opts ./test/mocha.opts",
