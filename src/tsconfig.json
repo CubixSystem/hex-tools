@@ -3,7 +3,7 @@
   "compilerOptions": {
     "inlineSourceMap": true,
     "declaration": true,
-    "declarationDir": "../types",
+    "declarationDir": "../dist/types",
     "outDir": "../dist",
     "rootDir": "./",
     "sourceRoot": "./src"
