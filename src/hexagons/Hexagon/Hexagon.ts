@@ -2,7 +2,6 @@ import { AxialVector, CubeVector, VectorMath } from "../../vectors";
 
 export interface IHexagonParams {
   position: AxialVector | CubeVector;
-  size: number;
 }
 
 export class Hexagon {

@@ -4,12 +4,12 @@ import { Hexagon } from "../../hexagons";
 import { AxialVector, CubeVector } from "../../vectors";
 
 describe("Hexagon", () => {
-  const hexagonParams = { position: new AxialVector(0, 0), size: 5 };
+  const hexagonParams = { position: new AxialVector(0, 0) };
 
   it("should check equality", () => {
     const hexagonA = new Hexagon(hexagonParams);
     const hexagonB = new Hexagon(hexagonParams);
-    const hexagonC = new Hexagon({ position: new AxialVector(1, 1), size: 5 });
+    const hexagonC = new Hexagon({ position: new AxialVector(1, 1) });
 
     Hexagon.isEqual.should.be.a("function");
     Hexagon.isEqual(hexagonA, hexagonA).should.be.true;
