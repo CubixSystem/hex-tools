@@ -8,6 +8,7 @@ export interface IHexagonGridParams {
   size: IHexagonGridSize;
   hexagonSize: number;
   type: HexagonGridType;
+  scale?: { horizontal: number; vertical: number };
 }
 
 export abstract class HexagonGrid<H extends Hexagon> {
@@ -19,20 +20,22 @@ export abstract class HexagonGrid<H extends Hexagon> {
   public readonly horizontalDistance: number;
   public readonly size: IHexagonGridSize;
   public readonly hexagonSize: number;
+  public readonly scale: { horizontal: number; vertical: number };
   public hexagons: Map<string, H> = new Map();
   public readonly type: HexagonGridType;
 
   protected readonly gridGenerator: GridGenerator<H>;
 
-  constructor(params: IHexagonGridParams) {
-    const hexagonHeight = params.hexagonSize * 2;
+  constructor({ hexagonSize, size, type, scale }: IHexagonGridParams) {
+    const hexagonHeight = hexagonSize * 2;
     const hexagonWidth = (Math.sqrt(3) / 2) * hexagonHeight;
 
-    this.hexagonSize = params.hexagonSize;
+    this.hexagonSize = hexagonSize;
     this.verticalDistance = (hexagonHeight * 3) / 4;
     this.horizontalDistance = hexagonWidth;
-    this.size = params.size;
-    this.type = params.type;
+    this.size = size;
+    this.type = type;
+    this.scale = scale ? scale : { horizontal: 1, vertical: 1 };
 
     this.gridGenerator = new GridGenerator({
       insertHexagonFunction: this.insertHexagon.bind(this),

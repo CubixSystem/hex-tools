@@ -20,11 +20,18 @@ export const pointyTopDirections = new Map([
 ]);
 
 export class PointyTopHexagonGrid<H extends Hexagon> extends HexagonGrid<H> {
-  protected static axialToPoint(vector: AxialVector, hexSize: number): Point {
+  protected static axialToPoint(
+    vector: AxialVector,
+    hexSize: number,
+    scale: { horizontal: number; vertical: number } = {
+      horizontal: 1,
+      vertical: 1,
+    },
+  ): Point {
     const q = vector.q;
     const r = vector.r;
-    const x = hexSize * Math.sqrt(3) * (q + r / 2);
-    const y = ((hexSize * 3) / 2) * r;
+    const x = hexSize * Math.sqrt(3) * (q + r / 2) * scale.horizontal;
+    const y = ((hexSize * 3) / 2) * r * scale.vertical;
     return new Point(x, y);
   }
 
@@ -38,7 +45,11 @@ export class PointyTopHexagonGrid<H extends Hexagon> extends HexagonGrid<H> {
   }
 
   public axialToPoint(vector: AxialVector): Point {
-    return PointyTopHexagonGrid.axialToPoint(vector, this.hexagonSize);
+    return PointyTopHexagonGrid.axialToPoint(
+      vector,
+      this.hexagonSize,
+      this.scale,
+    );
   }
 
   public pointToRoundAxial(point: Point): AxialVector {
