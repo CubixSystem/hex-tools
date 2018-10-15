@@ -13,4 +13,5 @@ export {
   CubeVector,
   IAxialVectorParams,
   ICubeVectorParams,
+  Point,
 } from "./vectors";

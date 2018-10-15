@@ -20,40 +20,69 @@ export const pointyTopDirections = new Map([
 ]);
 
 export class PointyTopHexagonGrid<H extends Hexagon> extends HexagonGrid<H> {
-  protected static axialToPoint(
-    vector: AxialVector,
-    hexSize: number,
-    scale: { horizontal: number; vertical: number } = {
+  protected static axialToPoint({
+    vector,
+    hexagonSize,
+    scale = {
       horizontal: 1,
       vertical: 1,
     },
-  ): Point {
+    origin = new Point(0, 0),
+  }: {
+    vector: AxialVector;
+    hexagonSize: number;
+    scale: { horizontal: number; vertical: number };
+    origin: Point;
+  }): Point {
     const q = vector.q;
     const r = vector.r;
-    const x = hexSize * Math.sqrt(3) * (q + r / 2) * scale.horizontal;
-    const y = ((hexSize * 3) / 2) * r * scale.vertical;
-    return new Point(x, y);
+    const x =
+      hexagonSize *
+      (Math.sqrt(3) * q + (Math.sqrt(3) / 2) * r) *
+      scale.horizontal;
+    const y = hexagonSize * (3 / 2) * r * scale.vertical;
+
+    return new Point(x + origin.x, y + origin.y);
   }
 
-  protected static pointToRoundAxial(
-    point: Point,
-    hexSize: number,
-  ): AxialVector {
-    const q = ((point.x * Math.sqrt(3)) / 3 - point.y / 3) / hexSize;
-    const r = (point.y * 2) / 3 / hexSize;
+  protected static pointToRoundAxial({
+    point,
+    hexagonSize,
+    scale = {
+      horizontal: 1,
+      vertical: 1,
+    },
+    origin = new Point(0, 0),
+  }: {
+    point: Point;
+    hexagonSize: number;
+    scale: { horizontal: number; vertical: number };
+    origin: Point;
+  }): AxialVector {
+    const x = (point.x - origin.x) / scale.horizontal;
+    const y = (point.y - origin.y) / scale.vertical;
+    const q = ((Math.sqrt(3) / 3) * x - (1 / 3) * y) / hexagonSize;
+    const r = ((2 / 3) * y) / hexagonSize;
+
     return VectorMath.axialRound(new AxialVector(q, r));
   }
 
   public axialToPoint(vector: AxialVector): Point {
-    return PointyTopHexagonGrid.axialToPoint(
+    return PointyTopHexagonGrid.axialToPoint({
+      hexagonSize: this.hexagonSize,
+      origin: this.origin,
+      scale: this.scale,
       vector,
-      this.hexagonSize,
-      this.scale,
-    );
+    });
   }
 
   public pointToRoundAxial(point: Point): AxialVector {
-    return PointyTopHexagonGrid.pointToRoundAxial(point, this.hexagonSize);
+    return PointyTopHexagonGrid.pointToRoundAxial({
+      hexagonSize: this.hexagonSize,
+      origin: this.origin,
+      point,
+      scale: this.scale,
+    });
   }
 
   public getHexagonNeighborsPositions(
