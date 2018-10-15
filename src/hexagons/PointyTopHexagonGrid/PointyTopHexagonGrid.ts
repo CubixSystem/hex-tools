@@ -1,7 +1,7 @@
 import { Hexagon, HexagonGrid } from "../../hexagons";
 import { AxialVector, CubeVector, Point, VectorMath } from "../../vectors";
 
-export enum PointyTopNeighborDirection {
+enum PointyTopNeighborDirection {
   EAST,
   NORTH_EAST,
   NORTH_WEST,
@@ -10,7 +10,7 @@ export enum PointyTopNeighborDirection {
   WEST,
 }
 
-export const pointyTopDirections = new Map([
+const pointyTopDirections = new Map([
   [PointyTopNeighborDirection.EAST, new CubeVector(-1, 0, 1)],
   [PointyTopNeighborDirection.NORTH_EAST, new CubeVector(-1, 1, 0)],
   [PointyTopNeighborDirection.NORTH_WEST, new CubeVector(0, 1, -1)],
@@ -19,7 +19,21 @@ export const pointyTopDirections = new Map([
   [PointyTopNeighborDirection.WEST, new CubeVector(1, 0, -1)],
 ]);
 
-export class PointyTopHexagonGrid<H extends Hexagon> extends HexagonGrid<H> {
+interface IAxialToPointParams {
+  vector: AxialVector;
+  hexagonSize: number;
+  scale: { horizontal: number; vertical: number };
+  origin: Point;
+}
+
+interface IPointToRoundAxial {
+  point: Point;
+  hexagonSize: number;
+  scale: { horizontal: number; vertical: number };
+  origin: Point;
+}
+
+class PointyTopHexagonGrid<H extends Hexagon> extends HexagonGrid<H> {
   protected static axialToPoint({
     vector,
     hexagonSize,
@@ -28,12 +42,7 @@ export class PointyTopHexagonGrid<H extends Hexagon> extends HexagonGrid<H> {
       vertical: 1,
     },
     origin = new Point(0, 0),
-  }: {
-    vector: AxialVector;
-    hexagonSize: number;
-    scale: { horizontal: number; vertical: number };
-    origin: Point;
-  }): Point {
+  }: IAxialToPointParams): Point {
     const q = vector.q;
     const r = vector.r;
     const x =
@@ -41,7 +50,6 @@ export class PointyTopHexagonGrid<H extends Hexagon> extends HexagonGrid<H> {
       (Math.sqrt(3) * q + (Math.sqrt(3) / 2) * r) *
       scale.horizontal;
     const y = hexagonSize * (3 / 2) * r * scale.vertical;
-
     return new Point(x + origin.x, y + origin.y);
   }
 
@@ -53,17 +61,11 @@ export class PointyTopHexagonGrid<H extends Hexagon> extends HexagonGrid<H> {
       vertical: 1,
     },
     origin = new Point(0, 0),
-  }: {
-    point: Point;
-    hexagonSize: number;
-    scale: { horizontal: number; vertical: number };
-    origin: Point;
-  }): AxialVector {
+  }: IPointToRoundAxial): AxialVector {
     const x = (point.x - origin.x) / scale.horizontal;
     const y = (point.y - origin.y) / scale.vertical;
     const q = ((Math.sqrt(3) / 3) * x - (1 / 3) * y) / hexagonSize;
     const r = ((2 / 3) * y) / hexagonSize;
-
     return VectorMath.axialRound(new AxialVector(q, r));
   }
 
@@ -96,3 +98,9 @@ export class PointyTopHexagonGrid<H extends Hexagon> extends HexagonGrid<H> {
     return neighborPositions;
   }
 }
+
+export {
+  PointyTopNeighborDirection,
+  pointyTopDirections,
+  PointyTopHexagonGrid,
+};
