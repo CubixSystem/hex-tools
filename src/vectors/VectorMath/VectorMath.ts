@@ -57,4 +57,32 @@ export class VectorMath {
       VectorMath.cubeRound(VectorMath.axialToCube(vector)),
     );
   }
+
+  public static cubeLine(a: CubeVector, b: CubeVector): CubeVector[] {
+    // TODO: Check
+    const N = a.subtract(b).roundLength;
+
+    const results = [];
+    const step = 1.0 / Math.max(N, 1);
+    for (let i = 0; i <= N; i++) {
+      results.push(VectorMath.cubeRound(VectorMath.cubeLerp(a, b, step * i)));
+    }
+    return results;
+  }
+
+  protected static cubeLerp(
+    vectorA: CubeVector,
+    vectorB: CubeVector,
+    t: number,
+  ): CubeVector {
+    return new CubeVector(
+      VectorMath.lerp(vectorA.q, vectorB.q, t),
+      VectorMath.lerp(vectorA.r, vectorB.r, t),
+      VectorMath.lerp(vectorA.s, vectorB.s, t),
+    );
+  }
+
+  protected static lerp(a: number, b: number, t: number): number {
+    return a * (1 - t) + b * t;
+  }
 }

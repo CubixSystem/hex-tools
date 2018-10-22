@@ -1,11 +1,12 @@
 export {
   PointyTopHexagonGrid,
-  PointyTopNeighborDirection,
+  PointyTopSide,
   IHexagonGridParams,
   IHexagonGridSize,
   Hexagon,
   IHexagonParams,
   HexagonGridType,
+  PointyTopGridTools,
 } from "./hexagons";
 
 export {
@@ -14,4 +15,5 @@ export {
   IAxialVectorParams,
   ICubeVectorParams,
   Point,
+  VectorMath,
 } from "./vectors";

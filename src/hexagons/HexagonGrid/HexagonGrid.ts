@@ -13,7 +13,7 @@ export interface IHexagonGridParams {
 }
 
 export abstract class HexagonGrid<H extends Hexagon> {
-  public static distance(hexagonA: Hexagon, hexagonB: Hexagon): number {
+  public static getDistance(hexagonA: Hexagon, hexagonB: Hexagon): number {
     return hexagonA.cubePosition.subtract(hexagonB.cubePosition).roundLength;
   }
 
@@ -52,9 +52,11 @@ export abstract class HexagonGrid<H extends Hexagon> {
   }
 
   public abstract axialToPoint(vector: AxialVector): Point;
-  public abstract getHexagonNeighborsPositions(
+  public abstract getHexagonNeighbors(position: AxialVector | CubeVector): H[];
+  public abstract getHexagonNeighbor(
     position: AxialVector | CubeVector,
-  ): CubeVector[];
+    direction: string,
+  ): H | undefined;
   public abstract pointToRoundAxial(point: Point): AxialVector;
 
   /**
@@ -109,19 +111,5 @@ export abstract class HexagonGrid<H extends Hexagon> {
     } else {
       return hexagon;
     }
-  }
-
-  public getHexagonNeighbors(position: AxialVector | CubeVector): H[] {
-    const neighbors: H[] = [];
-    const neighborPositions = this.getHexagonNeighborsPositions(position);
-    neighborPositions.forEach(neighborPosition => {
-      try {
-        const hexagon = this.getHexagon(neighborPosition);
-        neighbors.push(hexagon);
-      } catch (error) {
-        return;
-      }
-    });
-    return neighbors;
   }
 }
