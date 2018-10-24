@@ -58,14 +58,19 @@ export class VectorMath {
     );
   }
 
-  public static cubeLine(a: CubeVector, b: CubeVector): CubeVector[] {
+  public static cubeLine(
+    vectorA: CubeVector,
+    vectorB: CubeVector,
+  ): CubeVector[] {
     // TODO: Check
-    const N = a.subtract(b).roundLength;
+    const N = vectorA.subtract(vectorB).roundLength;
 
     const results = [];
     const step = 1.0 / Math.max(N, 1);
     for (let i = 0; i <= N; i++) {
-      results.push(VectorMath.cubeRound(VectorMath.cubeLerp(a, b, step * i)));
+      results.push(
+        VectorMath.cubeRound(VectorMath.cubeLerp(vectorA, vectorB, step * i)),
+      );
     }
     return results;
   }

@@ -47,12 +47,10 @@ class PointyTopHexagonGrid<H extends Hexagon> extends HexagonGrid<H> {
   public static getHexagonNeighborsPositions(
     position: AxialVector | CubeVector,
   ): CubeVector[] {
-    let hexagonPosition: CubeVector;
-    if (position instanceof AxialVector) {
-      hexagonPosition = VectorMath.axialToCube(position);
-    } else {
-      hexagonPosition = position;
-    }
+    const hexagonPosition =
+      position instanceof AxialVector
+        ? VectorMath.axialToCube(position)
+        : position;
     const neighborPositions: CubeVector[] = [];
     pointyTopSideDirections.forEach(direction => {
       neighborPositions.push(hexagonPosition.add(direction));
@@ -117,12 +115,10 @@ class PointyTopHexagonGrid<H extends Hexagon> extends HexagonGrid<H> {
     position: AxialVector | CubeVector,
     direction: PointyTopSide,
   ): H {
-    let hexagonPosition: CubeVector;
-    if (position instanceof AxialVector) {
-      hexagonPosition = VectorMath.axialToCube(position);
-    } else {
-      hexagonPosition = position;
-    }
+    const hexagonPosition =
+      position instanceof AxialVector
+        ? VectorMath.axialToCube(position)
+        : position;
     const neighborPosition = PointyTopGridTools.getHexagonNeighborPosition(
       hexagonPosition,
       direction,
@@ -144,6 +140,108 @@ class PointyTopHexagonGrid<H extends Hexagon> extends HexagonGrid<H> {
       }
     });
     return neighbors;
+  }
+
+  public getCircle(
+    center: AxialVector | CubeVector,
+    radius: number,
+  ): { center: H; hexagons: H[] } {
+    const centerVector =
+      center instanceof AxialVector ? VectorMath.axialToCube(center) : center;
+    const { vectors } = PointyTopGridTools.getCircle(centerVector, radius);
+    return {
+      center: this.getHexagon(center),
+      hexagons: vectors.map(this.getHexagon),
+    };
+  }
+
+  public getCircleSegment(
+    center: AxialVector | CubeVector,
+    radius: number,
+    direction: PointyTopSide,
+  ): { center: H; hexagons: H[] } {
+    const centerVector =
+      center instanceof AxialVector ? VectorMath.axialToCube(center) : center;
+    const { vectors } = PointyTopGridTools.getCircleSegment(
+      centerVector,
+      radius,
+      direction,
+    );
+    return {
+      center: this.getHexagon(center),
+      hexagons: vectors.map(this.getHexagon),
+    };
+  }
+
+  public getFillCircle(
+    center: AxialVector | CubeVector,
+    radius: number,
+  ): { center: H; hexagons: H[] } {
+    const centerVector =
+      center instanceof AxialVector ? VectorMath.axialToCube(center) : center;
+    const { vectors } = PointyTopGridTools.getFillCircle(centerVector, radius);
+    return {
+      center: this.getHexagon(center),
+      hexagons: vectors.map(this.getHexagon),
+    };
+  }
+
+  public getfillTriangle(
+    startVertex: AxialVector | CubeVector,
+    radius: number,
+    direction: PointyTopSide,
+  ): {
+    startVertex: H;
+    oppositeVertices: H[];
+    vertices: H[];
+    hexagons: H[];
+  } {
+    const startVertexVector =
+      startVertex instanceof AxialVector
+        ? VectorMath.axialToCube(startVertex)
+        : startVertex;
+    const {
+      vectors,
+      oppositeVertices,
+      vertices,
+    } = PointyTopGridTools.getfillTriangle(
+      startVertexVector,
+      radius,
+      direction,
+    );
+    return {
+      hexagons: vectors.map(vector => this.getHexagon(vector)),
+      oppositeVertices: oppositeVertices.map(vertex => this.getHexagon(vertex)),
+      startVertex: this.getHexagon(startVertex),
+      vertices: vertices.map(vertex => this.getHexagon(vertex)),
+    };
+  }
+
+  public getTriangle(
+    startVertex: AxialVector | CubeVector,
+    radius: number,
+    direction: PointyTopSide,
+  ): {
+    startVertex: H;
+    oppositeVertices: H[];
+    vertices: H[];
+    hexagons: H[];
+  } {
+    const startVertexVector =
+      startVertex instanceof AxialVector
+        ? VectorMath.axialToCube(startVertex)
+        : startVertex;
+    const {
+      vectors,
+      oppositeVertices,
+      vertices,
+    } = PointyTopGridTools.getTriangle(startVertexVector, radius, direction);
+    return {
+      hexagons: vectors.map(this.getHexagon),
+      oppositeVertices: oppositeVertices.map(this.getHexagon),
+      startVertex: this.getHexagon(startVertex),
+      vertices: vertices.map(this.getHexagon),
+    };
   }
 }
 
