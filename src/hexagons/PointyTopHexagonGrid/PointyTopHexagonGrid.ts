@@ -114,7 +114,7 @@ class PointyTopHexagonGrid<H extends Hexagon> extends HexagonGrid<H> {
   public getHexagonNeighbor(
     position: AxialVector | CubeVector,
     direction: PointyTopSide,
-  ): H {
+  ): H | undefined {
     const hexagonPosition =
       position instanceof AxialVector
         ? VectorMath.axialToCube(position)
@@ -132,11 +132,9 @@ class PointyTopHexagonGrid<H extends Hexagon> extends HexagonGrid<H> {
       position,
     );
     neighborPositions.forEach(neighborPosition => {
-      try {
-        const hexagon = this.getHexagon(neighborPosition);
+      const hexagon = this.getHexagon(neighborPosition);
+      if (hexagon) {
         neighbors.push(hexagon);
-      } catch (error) {
-        return;
       }
     });
     return neighbors;
@@ -145,13 +143,20 @@ class PointyTopHexagonGrid<H extends Hexagon> extends HexagonGrid<H> {
   public getCircle(
     center: AxialVector | CubeVector,
     radius: number,
-  ): { center: H; hexagons: H[] } {
+  ): { center: H | undefined; hexagons: H[] } {
     const centerVector =
       center instanceof AxialVector ? VectorMath.axialToCube(center) : center;
     const { vectors } = PointyTopGridTools.getCircle(centerVector, radius);
+    const hexagons: H[] = [];
+    vectors.forEach(vector => {
+      const hexagon = this.getHexagon(vector);
+      if (hexagon) {
+        hexagons.push(hexagon);
+      }
+    });
     return {
       center: this.getHexagon(center),
-      hexagons: vectors.map(this.getHexagon),
+      hexagons,
     };
   }
 
@@ -159,7 +164,7 @@ class PointyTopHexagonGrid<H extends Hexagon> extends HexagonGrid<H> {
     center: AxialVector | CubeVector,
     radius: number,
     direction: PointyTopSide,
-  ): { center: H; hexagons: H[] } {
+  ): { center: H | undefined; hexagons: H[] } {
     const centerVector =
       center instanceof AxialVector ? VectorMath.axialToCube(center) : center;
     const { vectors } = PointyTopGridTools.getCircleSegment(
@@ -169,20 +174,20 @@ class PointyTopHexagonGrid<H extends Hexagon> extends HexagonGrid<H> {
     );
     return {
       center: this.getHexagon(center),
-      hexagons: vectors.map(this.getHexagon),
+      hexagons: this.vectorsToHexagons(vectors),
     };
   }
 
   public getFillCircle(
     center: AxialVector | CubeVector,
     radius: number,
-  ): { center: H; hexagons: H[] } {
+  ): { center: H | undefined; hexagons: H[] } {
     const centerVector =
       center instanceof AxialVector ? VectorMath.axialToCube(center) : center;
     const { vectors } = PointyTopGridTools.getFillCircle(centerVector, radius);
     return {
       center: this.getHexagon(center),
-      hexagons: vectors.map(this.getHexagon),
+      hexagons: this.vectorsToHexagons(vectors),
     };
   }
 
@@ -191,7 +196,7 @@ class PointyTopHexagonGrid<H extends Hexagon> extends HexagonGrid<H> {
     radius: number,
     direction: PointyTopSide,
   ): {
-    startVertex: H;
+    startVertex: H | undefined;
     oppositeVertices: H[];
     vertices: H[];
     hexagons: H[];
@@ -210,10 +215,10 @@ class PointyTopHexagonGrid<H extends Hexagon> extends HexagonGrid<H> {
       direction,
     );
     return {
-      hexagons: vectors.map(vector => this.getHexagon(vector)),
-      oppositeVertices: oppositeVertices.map(vertex => this.getHexagon(vertex)),
+      hexagons: this.vectorsToHexagons(vectors),
+      oppositeVertices: this.vectorsToHexagons(oppositeVertices),
       startVertex: this.getHexagon(startVertex),
-      vertices: vertices.map(vertex => this.getHexagon(vertex)),
+      vertices: this.vectorsToHexagons(vertices),
     };
   }
 
@@ -222,7 +227,7 @@ class PointyTopHexagonGrid<H extends Hexagon> extends HexagonGrid<H> {
     radius: number,
     direction: PointyTopSide,
   ): {
-    startVertex: H;
+    startVertex: H | undefined;
     oppositeVertices: H[];
     vertices: H[];
     hexagons: H[];
@@ -237,10 +242,10 @@ class PointyTopHexagonGrid<H extends Hexagon> extends HexagonGrid<H> {
       vertices,
     } = PointyTopGridTools.getTriangle(startVertexVector, radius, direction);
     return {
-      hexagons: vectors.map(this.getHexagon),
-      oppositeVertices: oppositeVertices.map(this.getHexagon),
+      hexagons: this.vectorsToHexagons(vectors),
+      oppositeVertices: this.vectorsToHexagons(oppositeVertices),
       startVertex: this.getHexagon(startVertex),
-      vertices: vertices.map(this.getHexagon),
+      vertices: this.vectorsToHexagons(vertices),
     };
   }
 }

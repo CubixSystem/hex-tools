@@ -98,18 +98,25 @@ export abstract class HexagonGrid<H extends Hexagon> {
     this.insertHexagon(hexagon, position);
   }
 
-  /** @throws Will throw an error if hexagon with provided coordinates not exist */
-  public getHexagon(position: AxialVector | CubeVector): H {
+  public getHexagon(position: AxialVector | CubeVector): H | undefined {
     const { q, r } = position;
     const hash = Tools.combineHashes(
       Tools.calculateHash(q),
       Tools.calculateHash(r),
     );
-    const hexagon = this.hexagons.get(hash);
-    if (!hexagon) {
-      throw new Error(`Hexagon with coordinates ${q}:${r} not found`);
-    } else {
-      return hexagon;
-    }
+    return this.hexagons.get(hash);
+  }
+
+  protected vectorsToHexagons(vectors: Array<AxialVector | CubeVector>): H[] {
+    return vectors.reduce(
+      (hexagons, vector) => {
+        const hexagon = this.getHexagon(vector);
+        if (hexagon) {
+          hexagons.push(hexagon);
+        }
+        return hexagons;
+      },
+      [] as H[],
+    );
   }
 }
