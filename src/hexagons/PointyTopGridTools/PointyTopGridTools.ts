@@ -1,10 +1,11 @@
 import { CubeVector } from "../../vectors";
+import { GridTools } from "../GridTools";
 import {
   PointyTopSide,
   pointyTopSideDirections,
 } from "../PointyTopHexagonGrid";
 
-export class PointyTopGridTools {
+export class PointyTopGridTools extends GridTools {
   public static getHexagonNeighborPosition(
     position: CubeVector,
     direction: PointyTopSide,
