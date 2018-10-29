@@ -12,7 +12,7 @@ export interface IHexagonGridParams {
   origin?: Point;
 }
 
-export abstract class HexagonGrid<H extends Hexagon> {
+export abstract class HexagonGrid<H extends Hexagon = Hexagon> {
   public static getDistance(hexagonA: Hexagon, hexagonB: Hexagon): number {
     return hexagonA.cubePosition.subtract(hexagonB.cubePosition).roundLength;
   }

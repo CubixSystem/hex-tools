@@ -140,6 +140,22 @@ class PointyTopHexagonGrid<H extends Hexagon> extends HexagonGrid<H> {
     return neighbors;
   }
 
+  public getLine(
+    start: AxialVector | CubeVector,
+    end: AxialVector | CubeVector,
+  ): { start: H | undefined; end: H | undefined; hexagons: H[] } {
+    const startVector =
+      start instanceof AxialVector ? VectorMath.axialToCube(start) : start;
+    const endVector =
+      end instanceof AxialVector ? VectorMath.axialToCube(end) : end;
+    const vectors = VectorMath.cubeLine(startVector, endVector);
+    return {
+      end: this.getHexagon(end),
+      hexagons: this.vectorsToHexagons(vectors),
+      start: this.getHexagon(start),
+    };
+  }
+
   public getCircle(
     center: AxialVector | CubeVector,
     radius: number,
@@ -147,16 +163,9 @@ class PointyTopHexagonGrid<H extends Hexagon> extends HexagonGrid<H> {
     const centerVector =
       center instanceof AxialVector ? VectorMath.axialToCube(center) : center;
     const { vectors } = PointyTopGridTools.getCircle(centerVector, radius);
-    const hexagons: H[] = [];
-    vectors.forEach(vector => {
-      const hexagon = this.getHexagon(vector);
-      if (hexagon) {
-        hexagons.push(hexagon);
-      }
-    });
     return {
       center: this.getHexagon(center),
-      hexagons,
+      hexagons: this.vectorsToHexagons(vectors),
     };
   }
 
