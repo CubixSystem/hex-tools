@@ -7,9 +7,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "preserveConstEnums": true,
-    "pretty": true,
     "strict": true,
     "target": "es2017"
-  },
-  "compileOnSave": false
+  }
 }

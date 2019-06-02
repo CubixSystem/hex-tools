@@ -1,17 +1,13 @@
 import * as path from "path";
+import { ExternalsFunctionElement } from "webpack";
 
-type ExternalsFunctionElement = (
-  context: any,
-  request: string,
-  callback: (error?: any, result?: any) => void,
-) => void;
 const externals: ExternalsFunctionElement = (_context, request, callback) => {
   if (/^\w/.test(request)) {
     // tslint:disable-next-line:no-console
     console.info(`External deps used: '${request}'`);
     return callback(undefined, request);
   } else {
-    callback();
+    callback(undefined, undefined);
   }
 };
 
