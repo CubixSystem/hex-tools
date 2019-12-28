@@ -108,15 +108,12 @@ export abstract class HexagonGrid<H extends Hexagon = Hexagon> {
   }
 
   protected vectorsToHexagons(vectors: Array<AxialVector | CubeVector>): H[] {
-    return vectors.reduce(
-      (hexagons, vector) => {
-        const hexagon = this.getHexagon(vector);
-        if (hexagon) {
-          hexagons.push(hexagon);
-        }
-        return hexagons;
-      },
-      [] as H[],
-    );
+    return vectors.reduce((hexagons, vector) => {
+      const hexagon = this.getHexagon(vector);
+      if (hexagon) {
+        hexagons.push(hexagon);
+      }
+      return hexagons;
+    }, [] as H[]);
   }
 }
