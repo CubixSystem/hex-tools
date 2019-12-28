@@ -1,4 +1,4 @@
-import { Hexagon, HexagonGrid } from "../../hexagons";
+import { Hexagon, HexagonGrid, IHexagonGridParams } from "../../hexagons";
 import { AxialVector, CubeVector, Point, VectorMath } from "../../vectors";
 import { PointyTopGridTools } from "../PointyTopGridTools";
 
@@ -20,95 +20,37 @@ const pointyTopSideDirections = new Map([
   [PointyTopSide.WEST, new CubeVector(-1, 0, -1)],
 ]);
 
-// enum PointyTopRib {
-//   NORTH = "north",
-//   NORTH_EAST = "northEast",
-//   SOUTH_EAST = "southEast",
-//   SOUTH = "south",
-//   SOUTH_WEST = "southWest",
-//   NORTH_WEST = "northWest",
-// }
+class PointyTopHexagonGrid<H extends Hexagon = Hexagon> extends HexagonGrid<H> {
+  public verticalDistance: number;
+  public horizontalDistance: number;
 
-interface IAxialToPointParams {
-  vector: AxialVector;
-  hexagonSize: number;
-  scale: { horizontal: number; vertical: number };
-  origin: Point;
-}
+  constructor(params: IHexagonGridParams) {
+    super(params);
 
-interface IPointToRoundAxial {
-  point: Point;
-  hexagonSize: number;
-  scale: { horizontal: number; vertical: number };
-  origin: Point;
-}
+    const hexagonHeight = this.hexagonSize * 2;
+    const hexagonWidth = (Math.sqrt(3) / 2) * hexagonHeight;
 
-class PointyTopHexagonGrid<H extends Hexagon> extends HexagonGrid<H> {
-  public static getHexagonNeighborsPositions(
-    position: AxialVector | CubeVector,
-  ): CubeVector[] {
-    const hexagonPosition =
-      position instanceof AxialVector
-        ? VectorMath.axialToCube(position)
-        : position;
-    const neighborPositions: CubeVector[] = [];
-    pointyTopSideDirections.forEach(direction => {
-      neighborPositions.push(hexagonPosition.add(direction));
-    });
-    return neighborPositions;
-  }
-
-  protected static axialToPoint({
-    vector,
-    hexagonSize,
-    scale = {
-      horizontal: 1,
-      vertical: 1,
-    },
-    origin = new Point(0, 0),
-  }: IAxialToPointParams): Point {
-    const q = vector.q;
-    const r = vector.r;
-    const x =
-      hexagonSize *
-      (Math.sqrt(3) * q + (Math.sqrt(3) / 2) * r) *
-      scale.horizontal;
-    const y = hexagonSize * (3 / 2) * r * scale.vertical;
-    return new Point(x + origin.x, y + origin.y);
-  }
-
-  protected static pointToRoundAxial({
-    point,
-    hexagonSize,
-    scale = {
-      horizontal: 1,
-      vertical: 1,
-    },
-    origin = new Point(0, 0),
-  }: IPointToRoundAxial): AxialVector {
-    const x = (point.x - origin.x) / scale.horizontal;
-    const y = (point.y - origin.y) / scale.vertical;
-    const q = ((Math.sqrt(3) / 3) * x - (1 / 3) * y) / hexagonSize;
-    const r = ((2 / 3) * y) / hexagonSize;
-    return VectorMath.axialRound(new AxialVector(q, r));
+    this.verticalDistance = (hexagonHeight * 3) / 4;
+    this.horizontalDistance = hexagonWidth;
   }
 
   public axialToPoint(vector: AxialVector): Point {
-    return PointyTopHexagonGrid.axialToPoint({
-      hexagonSize: this.hexagonSize,
-      origin: this.origin,
-      scale: this.scale,
-      vector,
-    });
+    const q = vector.q;
+    const r = vector.r;
+    const x =
+      this.hexagonSize *
+      (Math.sqrt(3) * q + (Math.sqrt(3) / 2) * r) *
+      this.scale.horizontal;
+    const y = this.hexagonSize * (3 / 2) * r * this.scale.vertical;
+    return new Point(x, y);
   }
 
   public pointToRoundAxial(point: Point): AxialVector {
-    return PointyTopHexagonGrid.pointToRoundAxial({
-      hexagonSize: this.hexagonSize,
-      origin: this.origin,
-      point,
-      scale: this.scale,
-    });
+    const x = point.x / this.scale.horizontal;
+    const y = point.y / this.scale.vertical;
+    const q = ((Math.sqrt(3) / 3) * x - (1 / 3) * y) / this.hexagonSize;
+    const r = ((2 / 3) * y) / this.hexagonSize;
+    return VectorMath.axialRound(new AxialVector(q, r));
   }
 
   public getHexagonNeighbor(
@@ -128,7 +70,7 @@ class PointyTopHexagonGrid<H extends Hexagon> extends HexagonGrid<H> {
 
   public getHexagonNeighbors(position: AxialVector | CubeVector): H[] {
     const neighbors: H[] = [];
-    const neighborPositions = PointyTopHexagonGrid.getHexagonNeighborsPositions(
+    const neighborPositions = PointyTopGridTools.getHexagonNeighborsPositions(
       position,
     );
     neighborPositions.forEach(neighborPosition => {

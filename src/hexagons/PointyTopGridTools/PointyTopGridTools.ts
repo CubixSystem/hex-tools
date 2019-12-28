@@ -1,4 +1,4 @@
-import { CubeVector } from "../../vectors";
+import { AxialVector, CubeVector, VectorMath } from "../../vectors";
 import { GridTools } from "../GridTools";
 import {
   PointyTopSide,
@@ -16,6 +16,20 @@ export class PointyTopGridTools extends GridTools {
     } else {
       throw new Error(`Wrong direction ${direction}`);
     }
+  }
+
+  public static getHexagonNeighborsPositions(
+    position: AxialVector | CubeVector,
+  ): CubeVector[] {
+    const hexagonPosition =
+      position instanceof AxialVector
+        ? VectorMath.axialToCube(position)
+        : position;
+    const neighborPositions: CubeVector[] = [];
+    pointyTopSideDirections.forEach(direction => {
+      neighborPositions.push(hexagonPosition.add(direction));
+    });
+    return neighborPositions;
   }
 
   public static rotatePointyTopSide(

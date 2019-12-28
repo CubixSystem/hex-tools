@@ -1,15 +1,13 @@
 import { Hexagon } from "../../hexagons";
-import { Tools } from "../../Tools";
 import { AxialVector, CubeVector, Point } from "../../vectors";
 import { GridGenerator } from "./GridGenerator";
 import { HexagonGridType, IHexagonGridSize } from "./types";
 
 export interface IHexagonGridParams {
   size: IHexagonGridSize;
-  hexagonSize: number;
+  hexagonSize?: number;
   type: HexagonGridType;
   scale?: { horizontal: number; vertical: number };
-  origin?: Point;
 }
 
 export abstract class HexagonGrid<H extends Hexagon = Hexagon> {
@@ -17,29 +15,21 @@ export abstract class HexagonGrid<H extends Hexagon = Hexagon> {
     return hexagonA.cubePosition.subtract(hexagonB.cubePosition).roundLength;
   }
 
-  public readonly verticalDistance: number;
-  public readonly horizontalDistance: number;
+  public abstract verticalDistance: number;
+  public abstract horizontalDistance: number;
   public readonly size: IHexagonGridSize;
   public readonly hexagonSize: number;
   public readonly scale: { horizontal: number; vertical: number };
-  public readonly origin: Point;
   public hexagons: Map<string, H> = new Map();
   public readonly type: HexagonGridType;
 
   protected readonly gridGenerator: GridGenerator<H>;
 
-  constructor({ hexagonSize, size, type, scale, origin }: IHexagonGridParams) {
-    const hexagonHeight = hexagonSize * 2;
-    const hexagonWidth = (Math.sqrt(3) / 2) * hexagonHeight;
-
-    this.hexagonSize = hexagonSize;
-    this.verticalDistance = (hexagonHeight * 3) / 4;
-    this.horizontalDistance = hexagonWidth;
+  constructor({ hexagonSize, size, type, scale }: IHexagonGridParams) {
+    this.hexagonSize = hexagonSize ? hexagonSize : 1;
     this.size = size;
     this.type = type;
     this.scale = scale ? scale : { horizontal: 1, vertical: 1 };
-    this.origin = origin ? origin : new Point(0, 0);
-
     this.gridGenerator = new GridGenerator({
       insertHexagonFunction: this.insertHexagon.bind(this),
       size: this.size,
@@ -74,10 +64,7 @@ export abstract class HexagonGrid<H extends Hexagon = Hexagon> {
     }
 
     const { q, r } = hexagon.axialPosition;
-    const hash = Tools.combineHashes(
-      Tools.calculateHash(q),
-      Tools.calculateHash(r),
-    );
+    const hash = `${q}:${r}`;
     if (this.hexagons.get(hash)) {
       throw new Error(`Hexagon ${q}:${r} already exist`);
     }
@@ -86,10 +73,7 @@ export abstract class HexagonGrid<H extends Hexagon = Hexagon> {
 
   public removeHexagon(position: AxialVector | CubeVector): void {
     const { q, r } = position;
-    const hash = Tools.combineHashes(
-      Tools.calculateHash(q),
-      Tools.calculateHash(r),
-    );
+    const hash = `${q}:${r}`;
     this.hexagons.delete(hash);
   }
 
@@ -100,10 +84,7 @@ export abstract class HexagonGrid<H extends Hexagon = Hexagon> {
 
   public getHexagon(position: AxialVector | CubeVector): H | undefined {
     const { q, r } = position;
-    const hash = Tools.combineHashes(
-      Tools.calculateHash(q),
-      Tools.calculateHash(r),
-    );
+    const hash = `${q}:${r}`;
     return this.hexagons.get(hash);
   }
 

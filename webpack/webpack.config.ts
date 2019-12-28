@@ -1,15 +1,4 @@
 import * as path from "path";
-import { ExternalsFunctionElement } from "webpack";
-
-const externals: ExternalsFunctionElement = (_context, request, callback) => {
-  if (/^\w/.test(request)) {
-    // tslint:disable-next-line:no-console
-    console.info(`External deps used: '${request}'`);
-    return callback(undefined, request);
-  } else {
-    callback(undefined, undefined);
-  }
-};
 
 const baseConfig = {
   devtool: "source-map", // Enable sourcemaps for debugging webpack's output.
@@ -17,8 +6,6 @@ const baseConfig = {
   entry: {
     bundle: "./src", // NOTE ./ - project root directory
   },
-
-  externals,
 
   mode: "production",
 
