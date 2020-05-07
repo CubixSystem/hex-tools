@@ -1,9 +1,7 @@
 {
+  "extends": "./tsconfig.common.json",
   "compilerOptions": {
-    "moduleResolution": "node",
-    "module": "commonjs",
-    "target": "ES2019",
-    "strict": true,
-    "incremental": true
+    "noEmit": true,
+    "rootDir": "./"
   }
 }
