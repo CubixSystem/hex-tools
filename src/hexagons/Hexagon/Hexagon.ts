@@ -1,6 +1,6 @@
 import { AxialVector, CubeVector, VectorMath } from "../../vectors";
 
-export interface IHexagonParams {
+export interface HexagonParams {
   position: AxialVector | CubeVector;
 }
 
@@ -11,7 +11,7 @@ export class Hexagon {
 
   public position: AxialVector;
 
-  constructor(params: IHexagonParams) {
+  constructor(params: HexagonParams) {
     params.position instanceof CubeVector
       ? (this.position = VectorMath.cubeToAxial(
           new CubeVector(params.position),

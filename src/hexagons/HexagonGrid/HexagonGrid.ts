@@ -1,10 +1,10 @@
 import { Hexagon } from "../../hexagons";
 import { AxialVector, CubeVector, Point } from "../../vectors";
 import { GridGenerator } from "./GridGenerator";
-import { HexagonGridType, IHexagonGridSize } from "./types";
+import { HexagonGridType, HexagonGridSize } from "./types";
 
-export interface IHexagonGridParams {
-  size: IHexagonGridSize;
+export interface HexagonGridParams {
+  size: HexagonGridSize;
   hexagonSize?: number;
   type: HexagonGridType;
   scale?: { horizontal: number; vertical: number };
@@ -17,7 +17,7 @@ export abstract class HexagonGrid<H extends Hexagon = Hexagon> {
 
   public abstract verticalDistance: number;
   public abstract horizontalDistance: number;
-  public readonly size: IHexagonGridSize;
+  public readonly size: HexagonGridSize;
   public readonly hexagonSize: number;
   public readonly scale: { horizontal: number; vertical: number };
   public hexagons: Map<string, H> = new Map();
@@ -25,7 +25,7 @@ export abstract class HexagonGrid<H extends Hexagon = Hexagon> {
 
   protected readonly gridGenerator: GridGenerator<H>;
 
-  constructor({ hexagonSize, size, type, scale }: IHexagonGridParams) {
+  constructor({ hexagonSize, size, type, scale }: HexagonGridParams) {
     this.hexagonSize = hexagonSize ? hexagonSize : 1;
     this.size = size;
     this.type = type;

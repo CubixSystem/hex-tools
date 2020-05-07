@@ -13,7 +13,6 @@ const baseConfig = {
     rules: [
       // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
       { test: /\.js$/, loader: "source-map-loader", enforce: "pre" },
-      { test: /\.ts$/, loader: "tslint-loader", enforce: "pre" },
 
       // General files
       { test: /\.ts$/, loader: "ts-loader" },

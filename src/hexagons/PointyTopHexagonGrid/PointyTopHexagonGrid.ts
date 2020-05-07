@@ -1,4 +1,4 @@
-import { Hexagon, HexagonGrid, IHexagonGridParams } from "../../hexagons";
+import { Hexagon, HexagonGrid, HexagonGridParams } from "../../hexagons";
 import { AxialVector, CubeVector, Point, VectorMath } from "../../vectors";
 import { PointyTopGridTools } from "../PointyTopGridTools";
 
@@ -24,7 +24,7 @@ class PointyTopHexagonGrid<H extends Hexagon = Hexagon> extends HexagonGrid<H> {
   public verticalDistance: number;
   public horizontalDistance: number;
 
-  constructor(params: IHexagonGridParams) {
+  constructor(params: HexagonGridParams) {
     super(params);
 
     const hexagonHeight = this.hexagonSize * 2;
@@ -73,7 +73,7 @@ class PointyTopHexagonGrid<H extends Hexagon = Hexagon> extends HexagonGrid<H> {
     const neighborPositions = PointyTopGridTools.getHexagonNeighborsPositions(
       position,
     );
-    neighborPositions.forEach(neighborPosition => {
+    neighborPositions.forEach((neighborPosition) => {
       const hexagon = this.getHexagon(neighborPosition);
       if (hexagon) {
         neighbors.push(hexagon);

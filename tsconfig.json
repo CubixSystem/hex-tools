@@ -1,13 +1,9 @@
 {
   "compilerOptions": {
-    "forceConsistentCasingInFileNames": true,
     "moduleResolution": "node",
-    "newLine": "LF",
-    "noImplicitReturns": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "preserveConstEnums": true,
+    "module": "commonjs",
+    "target": "ES2019",
     "strict": true,
-    "target": "es2017"
+    "incremental": true
   }
 }

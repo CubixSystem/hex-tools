@@ -1,4 +1,4 @@
-export interface ICubeVectorParams {
+export interface CubeVectorParams {
   q?: number;
   r?: number;
   s?: number;
@@ -43,7 +43,7 @@ export class CubeVector {
   public r!: number;
   public s!: number;
 
-  constructor(q: number | ICubeVectorParams, r?: number, s?: number) {
+  constructor(q: number | CubeVectorParams, r?: number, s?: number) {
     if (typeof q === "number") {
       this.complementVector({ q, r, s });
     } else if (typeof q === "object") {
@@ -83,7 +83,7 @@ export class CubeVector {
     return this.q === vector.q && this.r === vector.r && this.s === vector.s;
   }
 
-  protected complementVector(vector: ICubeVectorParams): void {
+  protected complementVector(vector: CubeVectorParams): void {
     const q = vector.q;
     const r = vector.r;
     const s = vector.s;

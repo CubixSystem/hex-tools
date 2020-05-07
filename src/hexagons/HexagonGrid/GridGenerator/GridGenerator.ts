@@ -1,9 +1,9 @@
 import { Hexagon } from "../../../hexagons";
 import { AxialVector, CubeVector, VectorMath } from "../../../vectors";
-import { HexagonGridType, IHexagonGridSize } from "../types";
+import { HexagonGridType, HexagonGridSize } from "../types";
 
-export interface IGridGeneratorParams<H extends Hexagon> {
-  size: IHexagonGridSize;
+export interface GridGeneratorParams<H extends Hexagon> {
+  size: HexagonGridSize;
   type: HexagonGridType;
   insertHexagonFunction: (
     hexagon: H,
@@ -12,14 +12,14 @@ export interface IGridGeneratorParams<H extends Hexagon> {
 }
 
 export class GridGenerator<H extends Hexagon> {
-  protected readonly size: IHexagonGridSize;
+  protected readonly size: HexagonGridSize;
   protected readonly type: HexagonGridType;
   protected readonly insertHexagon: (
     hexagon: H,
     position: AxialVector | CubeVector,
   ) => void;
 
-  constructor(params: IGridGeneratorParams<H>) {
+  constructor(params: GridGeneratorParams<H>) {
     this.size = params.size;
     this.type = params.type;
     this.insertHexagon = params.insertHexagonFunction;

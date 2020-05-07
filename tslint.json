@@ -1,9 +1,0 @@
-{
-  "extends": ["tslint:recommended"],
-  "rules": {
-    "arrow-parens": [true, "ban-single-arg-parens"],
-    "no-null-keyword": true,
-    "typedef": [true, "call-signature"],
-    "variable-name": [true, "allow-leading-underscore"]
-  }
-}

@@ -1,4 +1,4 @@
-// tslint:disable:no-unused-expression
+import "jest-extended";
 
 import { Hexagon } from "../../hexagons";
 import { AxialVector, CubeVector } from "../../vectors";
@@ -11,42 +11,46 @@ describe("Hexagon", () => {
     const hexagonB = new Hexagon(hexagonParams);
     const hexagonC = new Hexagon({ position: new AxialVector(1, 1) });
 
-    Hexagon.isEqual.should.be.a("function");
-    Hexagon.isEqual(hexagonA, hexagonA).should.be.true;
-    Hexagon.isEqual(hexagonA, hexagonB).should.be.true;
-    Hexagon.isEqual(hexagonA, hexagonC).should.be.false;
+    expect(Hexagon.isEqual).toBeFunction();
 
-    Hexagon.isEqual(hexagonB, hexagonA).should.be.true;
-    Hexagon.isEqual(hexagonB, hexagonB).should.be.true;
-    Hexagon.isEqual(hexagonB, hexagonC).should.be.false;
+    expect(Hexagon.isEqual(hexagonA, hexagonA)).toBe(true);
+    expect(Hexagon.isEqual(hexagonA, hexagonB)).toBe(true);
+    expect(Hexagon.isEqual(hexagonA, hexagonC)).toBe(false);
 
-    Hexagon.isEqual(hexagonC, hexagonA).should.be.false;
-    Hexagon.isEqual(hexagonC, hexagonB).should.be.false;
-    Hexagon.isEqual(hexagonC, hexagonC).should.be.true;
+    expect(Hexagon.isEqual(hexagonB, hexagonA)).toBe(true);
+    expect(Hexagon.isEqual(hexagonB, hexagonB)).toBe(true);
+    expect(Hexagon.isEqual(hexagonB, hexagonC)).toBe(false);
 
-    hexagonA.isEqual.should.be.a("function");
-    hexagonA.isEqual(hexagonA).should.be.true;
-    hexagonA.isEqual(hexagonB).should.be.true;
-    hexagonA.isEqual(hexagonC).should.be.false;
+    expect(Hexagon.isEqual(hexagonC, hexagonA)).toBe(false);
+    expect(Hexagon.isEqual(hexagonC, hexagonB)).toBe(false);
+    expect(Hexagon.isEqual(hexagonC, hexagonC)).toBe(true);
 
-    hexagonB.isEqual.should.be.a("function");
-    hexagonB.isEqual(hexagonA).should.be.true;
-    hexagonB.isEqual(hexagonB).should.be.true;
-    hexagonB.isEqual(hexagonC).should.be.false;
+    expect(hexagonA.isEqual).toBeFunction();
 
-    hexagonC.isEqual.should.be.a("function");
-    hexagonC.isEqual(hexagonA).should.be.false;
-    hexagonC.isEqual(hexagonB).should.be.false;
-    hexagonC.isEqual(hexagonC).should.be.true;
+    expect(hexagonA.isEqual(hexagonA)).toBe(true);
+    expect(hexagonA.isEqual(hexagonB)).toBe(true);
+    expect(hexagonA.isEqual(hexagonC)).toBe(false);
+
+    expect(hexagonB.isEqual).toBeFunction();
+
+    expect(hexagonB.isEqual(hexagonA)).toBe(true);
+    expect(hexagonB.isEqual(hexagonB)).toBe(true);
+    expect(hexagonB.isEqual(hexagonC)).toBe(false);
+
+    expect(hexagonC.isEqual).toBeFunction();
+
+    expect(hexagonC.isEqual(hexagonA)).toBe(false);
+    expect(hexagonC.isEqual(hexagonB)).toBe(false);
+    expect(hexagonC.isEqual(hexagonC)).toBe(true);
   });
 
   it("should have position in CubeVector form", () => {
     const hexagon = new Hexagon(hexagonParams);
-    hexagon.cubePosition.should.be.instanceof(CubeVector);
+    expect(hexagon.cubePosition).toBeInstanceOf(CubeVector);
   });
 
   it("should have position in AxialVector form", () => {
     const hexagon = new Hexagon(hexagonParams);
-    hexagon.axialPosition.should.be.instanceof(AxialVector);
+    expect(hexagon.axialPosition).toBeInstanceOf(AxialVector);
   });
 });

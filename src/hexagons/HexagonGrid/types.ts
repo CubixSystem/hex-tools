@@ -1,4 +1,4 @@
-export interface IHexagonGridSize {
+export interface HexagonGridSize {
   width: number;
   height: number;
 }

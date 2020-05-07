@@ -26,7 +26,7 @@ export class PointyTopGridTools extends GridTools {
         ? VectorMath.axialToCube(position)
         : position;
     const neighborPositions: CubeVector[] = [];
-    pointyTopSideDirections.forEach(direction => {
+    pointyTopSideDirections.forEach((direction) => {
       neighborPositions.push(hexagonPosition.add(direction));
     });
     return neighborPositions;

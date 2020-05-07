@@ -1,4 +1,4 @@
-export interface IAxialVectorParams {
+export interface AxialVectorParams {
   q: number;
   r: number;
 }
@@ -26,7 +26,7 @@ export class AxialVector {
   public q: number;
   public r: number;
 
-  constructor(q: number | IAxialVectorParams, r?: number) {
+  constructor(q: number | AxialVectorParams, r?: number) {
     if (typeof r === "number" && typeof q === "number") {
       this.q = q;
       this.r = r;
