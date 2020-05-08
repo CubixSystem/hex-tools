@@ -4,7 +4,7 @@
   "description": "Tools for hexagon based grids",
   "main": "./dist/bundle.node.js",
   "browser": "./dist/bundle.js",
-  "types": "./types/index.d.ts",
+  "types": "./types/src/index.d.ts",
   "files": [
     "./dist",
     "./types"
