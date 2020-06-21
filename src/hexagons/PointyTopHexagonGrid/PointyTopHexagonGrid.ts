@@ -2,6 +2,9 @@ import { Hexagon, HexagonGrid, HexagonGridParams } from "../../hexagons";
 import { AxialVector, CubeVector, Point, VectorMath } from "../../vectors";
 import { PointyTopGridTools } from "../PointyTopGridTools";
 
+/**
+ * Enumeration of all sides for pointy top hexagon
+ */
 enum PointyTopSide {
   EAST = "east",
   NORTH_EAST = "northEast",
@@ -20,6 +23,9 @@ const pointyTopSideDirections = new Map([
   [PointyTopSide.WEST, new CubeVector(-1, 0, -1)],
 ]);
 
+/**
+ * PointyTopHexagonGrid
+ */
 class PointyTopHexagonGrid<H extends Hexagon = Hexagon> extends HexagonGrid<H> {
   public verticalDistance: number;
   public horizontalDistance: number;
