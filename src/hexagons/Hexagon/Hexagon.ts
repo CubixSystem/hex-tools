@@ -9,7 +9,7 @@ export class Hexagon {
     return AxialVector.isEqual(hexagonA.axialPosition, hexagonB.axialPosition);
   }
 
-  public position: AxialVector;
+  private position: AxialVector;
 
   constructor(params: HexagonParams) {
     params.position instanceof CubeVector
